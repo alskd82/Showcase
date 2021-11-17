@@ -1,0 +1,290 @@
+@charset "UTF-8";
+@font-face {
+  font-family: "Euclid Flex";
+  src: url(fonts/EuclidFlexMedium.eot);
+  src: url(fonts/EuclidFlexMedium.eot?#iefix) format("embedded-opentype"), url(fonts/EuclidFlexMedium.woff2) format("woff2"), url(fonts/EuclidFlexMedium.woff) format("woff"), url(fonts/EuclidFlexMedium.ttf) format("truetype"), url(fonts/EuclidFlexMedium.svg#EuclidFlexMedium) format("svg");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+.app {
+  font-weight: 500;
+  letter-spacing: 0;
+  font-family: "Noto Sans KR", sans-serif;
+  color: #fff;
+  line-height: 1;
+  white-space: nowrap;
+  -webkit-font-smoothing: antialiased;
+  -webkit-text-size-adjust: none;
+  -moz-text-size-adjust: none;
+  -ms-text-size-adjust: none;
+  text-size-adjust: none;
+}
+
+.app .font-musinsa {
+  font-family: Musinsa, sans-serif !important;
+  font-weight: 500 !important;
+}
+
+.app .font-euclidflex {
+  font-family: "Euclid Flex", sans-serif !important;
+  letter-spacing: 0 !important;
+}
+
+.app h1, .app h2, .app h3, .app h4, .app h5 {
+  font-weight: 500;
+}
+
+.app .bold {
+  font-weight: 700 !important;
+}
+
+.app i {
+  font-style: normal;
+}
+
+.app .txt-right {
+  text-align: right !important;
+}
+
+.app .lined {
+  display: inline-block;
+  position: relative;
+  overflow: hidden;
+}
+
+.app .lined .line {
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #000;
+}
+
+.app .lined .txt {
+  color: #fff;
+  position: relative;
+  display: block;
+  padding: .4em .6em .5em;
+}
+
+.app .lined.yellow .line {
+  background: #fee717;
+}
+
+.app .lined.yellow .txt {
+  color: #000;
+}
+
+body, html {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  font-family: "-apple-system", "HelveticaNeue", "Roboto", "Noto Sans KR", "helvetica", "Gulim", sans-serif;
+}
+
+.app {
+  overflow: hidden;
+  -webkit-transform: translate(0, 0);
+          transform: translate(0, 0);
+  max-width: 80vh;
+  width: 100%;
+  height: 100%;
+  margin: 0 auto;
+}
+
+.app * {
+  -webkit-backface-visibility: hidden;
+          backface-visibility: hidden;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -o-user-select: none;
+  -ms-user-select: none;
+      user-select: none;
+  -webkit-user-drag: none;
+  -moz-user-drag: none;
+  -o-user-drag: none;
+}
+
+/* //////// 상하 그라디언트 딤 //////////// */
+.app:after, .app:before {
+  content: "";
+  position: absolute;
+  left: -100%;
+  right: -100%;
+  pointer-events: none;
+  opacity: .4;
+  z-index: 999;
+  background: -webkit-gradient(linear, left top, left bottom, from(rgba(0, 0, 0, 0)), to(rgba(0, 0, 0, 0.5)));
+  background: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.5));
+}
+
+.app:after {
+  bottom: 0;
+  height: 12%;
+}
+
+.app:before {
+  top: 0;
+  height: 8%;
+  -webkit-transform: rotate(180deg);
+          transform: rotate(180deg);
+}
+
+@media screen and (max-width: 1023px) {
+  #app:after {
+    display: none;
+  }
+}
+
+/* //////// progress //////////// */
+.app .app-progress {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 999;
+  height: 2px;
+  background-color: rgba(255, 255, 255, 0.25);
+}
+
+.app .app-progress .app-progress-bar {
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  -webkit-transform-origin: 0 50%;
+          transform-origin: 0 50%;
+  background-color: #000;
+}
+
+.app .app-progress[data-theme=dark] .app-progress-bar {
+  background: #000;
+}
+
+.visual-block {
+  background-color: #f2f2f2;
+}
+
+.pages {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  max-width: 80vh;
+  height: 100vh;
+  overflow: hidden;
+  z-index: 1;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  perspective: 1200px;
+  -webkit-perspective: 1200px;
+  background: #000 50% 50% no-repeat;
+  background-size: cover;
+}
+
+.pages .page {
+  transform-style: preserve-3d;
+  -webkit-transform-style: preserve-3d;
+  background: 0 0;
+  overflow: hidden;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+}
+
+.pages .page[data-status=active],
+.pages .page[data-status=sibling] {
+  display: block;
+  opacity: 1;
+}
+
+.pages .page[data-status=sibling-sibling] {
+  opacity: 0;
+  display: block;
+}
+
+.pages .page .page-inner {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+}
+
+.pages .page .page-inner .page-bg,
+.pages .page .page-inner .page-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  width: 80vh;
+  height: 100vh;
+}
+
+.pages .page .bg {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  width: 80vh;
+  height: 100vh;
+}
+
+.pages .page .rolling-bg {
+  background: #090a0a;
+}
+
+.pages .page .rolling-bg .back {
+  -webkit-transform: translateZ(0);
+          transform: translateZ(0);
+}
+
+/* backgorund image 적용되는 엘리먼트 */
+.pages .page .back {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: 50% 50% no-repeat;
+  background-size: auto 100%;
+}
+
+@media screen and (max-width: 1023px) {
+  .pages {
+    height: calc(var(--vh, 1vh) * 100);
+  }
+  .pages .page .page-bg,
+  .pages .page .page-content {
+    width: calc(var(--vh, 1vh) * 80);
+    height: calc(var(--vh, 1vh) * 100);
+  }
+  .pages .page .bg {
+    width: calc(var(--vh, 1vh) * 80);
+    height: calc(var(--vh, 1vh) * 100);
+  }
+  .pages .page .txt-left {
+    text-align: left;
+  }
+}
+
+.pages img {
+  display: block;
+}
+/*# sourceMappingURL=style.css.map */

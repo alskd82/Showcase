@@ -1,0 +1,340 @@
+
+@import './_app.scss';
+
+
+.visual-block {
+    background-color: #f2f2f2;
+}
+
+
+.pages {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    max-width: 80vh;
+    height: 100vh;
+    overflow: hidden;
+    z-index: 1;
+    box-sizing: border-box;
+    perspective: 1200px;
+    -webkit-perspective: 1200px;
+    background: #000 50% 50% no-repeat;
+    background-size: cover
+}
+
+.pages .page {
+    transform-style: preserve-3d;
+    -webkit-transform-style: preserve-3d;
+    background: 0 0;
+    overflow: hidden;
+    // display: none; /* ================================>  처음에 가리기 */
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    position: absolute; width: 100%; height: 100%; top: 0; left: 0;
+}
+
+.pages .page[data-status=active],
+.pages .page[data-status=sibling] { display: block; opacity: 1; }
+.pages .page[data-status=sibling-sibling] { opacity: 0; display: block; }
+
+.pages .page .page-inner { 
+    position: absolute; width: 100%; height: 100%; top: 0; left: 0; 
+
+    .page-bg,
+    .page-content {
+        position: absolute; top: 50%; left: 50%;
+        transform: translate(-50%, -50%);
+        width: 80vh; height: 100vh;
+    }
+}
+
+.pages .page .bg {
+    position: absolute; top: 50%; left: 50%; 
+    transform: translate(-50%, -50%);
+    width: 80vh; height: 100vh;
+}
+
+.pages .page .rolling-bg { background: #090a0a }
+.pages .page .rolling-bg .back { transform: translateZ(0) }
+
+/* backgorund image 적용되는 엘리먼트 */
+.pages .page .back { 
+    position: absolute; top: 0; left: 0;
+    width: 100%; height: 100%; 
+    background: 50% 50% no-repeat;
+    background-size: auto 100%
+}
+
+@media screen and (max-width:1023px) {
+    .pages {
+        height: calc(var(--vh, 1vh) * 100);
+    }
+
+    .pages .page .page-bg,
+    .pages .page .page-content {
+        width: calc(var(--vh, 1vh) * 80);
+        height: calc(var(--vh, 1vh) * 100)
+    }
+
+    .pages .page .bg {
+        width: calc(var(--vh, 1vh) * 80);
+        height: calc(var(--vh, 1vh) * 100)
+    }
+
+
+    .pages .page .txt-left {
+        text-align: left
+    }
+
+    // .pages .page h1 span,
+    // .pages .page h2 span,
+    // .pages .page h3 span,
+    // .pages .page h4 span {
+    //     filter: blur(0);
+    //     backface-visibility: hidden;
+    //     -webkit-filter: blur(0);
+    //     position: relative
+    // }
+
+    // .pages .page .descriptions p {
+    //     filter: blur(0);
+    //     backface-visibility: hidden;
+    //     -webkit-filter: blur(0);
+    //     font-size: calc(var(--vh, 1vh) * 1.8897637795);
+    //     line-height: 1.6666666667em;
+    //     position: relative
+    // }
+
+    // .pages .page .descriptions p .quote {
+    //     position: absolute;
+    //     top: 0;
+    //     left: -.5em
+    // }
+
+    // .pages .page .descriptions .mb-1 {
+    //     margin-bottom: 1em
+    // }
+
+    // .pages .page .color-black {
+    //     color: #000
+    // }
+
+    // .pages img {
+    //     display: block
+    // }
+
+    // .pages .indices {
+    //     display: flex;
+    //     box-sizing: border-box;
+    //     align-items: center;
+    //     justify-content: center
+    // }
+
+    // .pages .indices .index {
+    //     display: block;
+    //     width: calc(var(--vh, 1vh) * .9448818898);
+    //     height: calc(var(--vh, 1vh) * .9448818898);
+    //     border-radius: calc(var(--vh, 1vh) * .9448818898);
+    //     border: 1px solid #fff;
+    //     background: 0 0;
+    //     text-indent: -99em;
+    //     overflow: hidden;
+    //     box-sizing: border-box;
+    //     margin-right: calc(var(--vh, 1vh) * .6299212598);
+    //     transition: opacity .2s, background-color .2s;
+    //     will-change: opacity, background-color;
+    //     transition-delay: 0s
+    // }
+
+    // .pages .indices .index.active {
+    //     opacity: 1;
+    //     background-color: #fff
+    // }
+
+    // .pages .indices .index:last-child {
+    //     margin-right: 0
+    // }
+
+    // .pages .centered-content {
+    //     position: absolute;
+    //     top: 50%;
+    //     left: 50%;
+    //     transform: translate(-50%, -50%)
+    // }
+
+    // .pages .txt-center .indices {
+    //     justify-content: center
+    // }
+
+    // .pages .txt-center .descriptions p {
+    //     text-align: center
+    // }
+
+    // .pages .txt-left .descriptions p {
+    //     text-align: left
+    // }
+
+    // .pages .white .descriptions p {
+    //     color: #fff
+    // }
+
+    // .pages .white .indices .index {
+    //     border-color: #fff
+    // }
+
+    // .pages .white .indices .index.active {
+    //     background-color: #fff
+    // }
+
+    // .pages .back.dimmed {
+    //     background: rgba(0, 0, 0, .7)
+    // }
+
+    // .app .msg-next {
+    //     opacity: 0;
+    //     z-index: 10;
+    //     pointer-events: none;
+    //     position: absolute;
+    //     height: calc(var(--vh, 1vh) * 4.2519685039);
+    //     display: flex;
+    //     align-items: center;
+    //     justify-content: center;
+    //     padding: 0 calc(var(--vh, 1vh) * 1.8897637795);
+    //     background: rgba(0, 0, 0, .4);
+    //     border-radius: 4px;
+    //     position: absolute;
+    //     top: 50%;
+    //     transform: translateY(-50%);
+    //     right: calc(var(--vh, 1vh) * 3.1496062992)
+    // }
+
+    // .app .msg-next.active {
+    //     animation: msg-next-motion 1.25s forwards
+    // }
+
+    // .app .msg-next span {
+    //     display: flex;
+    //     align-items: center;
+    //     justify-content: center;
+    //     font-size: calc(var(--vh, 1vh) * 1.4173228346);
+    //     color: #fff
+    // }
+
+    // .app .msg-next span svg {
+    //     display: block;
+    //     height: calc(var(--vh, 1vh) * 1.4173228346);
+    //     margin-left: calc(var(--vh, 1vh) * .3149606299)
+    // }
+}
+
+
+
+
+
+
+// .pages .page .txt-left {
+//     text-align: left
+// }
+
+// .pages .page h1 span,
+// .pages .page h2 span,
+// .pages .page h3 span,
+// .pages .page h4 span {
+//     filter: blur(0);
+//     backface-visibility: hidden;
+//     -webkit-filter: blur(0);
+//     position: relative
+// }
+
+// .pages .page .descriptions p {
+//     filter: blur(0);
+//     backface-visibility: hidden;
+//     -webkit-filter: blur(0);
+//     font-size: 1.8897637795vh;
+//     line-height: 1.6666666667em;
+//     position: relative
+// }
+
+// .pages .page .descriptions p .quote {
+//     position: absolute;
+//     top: 0;
+//     left: -.5em
+// }
+
+// .pages .page .descriptions .mb-1 {
+//     margin-bottom: 1em
+// }
+
+// .pages .page .color-black {
+//     color: #000
+// }
+
+.pages img {
+    display: block
+}
+
+// .pages .indices {
+//     display: flex;
+//     box-sizing: border-box;
+//     align-items: center;
+//     justify-content: center
+// }
+
+// .pages .indices .index {
+//     display: block;
+//     width: .9448818898vh;
+//     height: .9448818898vh;
+//     border-radius: .9448818898vh;
+//     border: 1px solid #fff;
+//     background: 0 0;
+//     text-indent: -99em;
+//     overflow: hidden;
+//     box-sizing: border-box;
+//     margin-right: .6299212598vh;
+//     transition: opacity .2s, background-color .2s;
+//     will-change: opacity, background-color;
+//     transition-delay: 0s
+// }
+
+// .pages .indices .index.active {
+//     opacity: 1;
+//     background-color: #fff
+// }
+
+// .pages .indices .index:last-child {
+//     margin-right: 0
+// }
+
+// .pages .centered-content {
+//     position: absolute;
+//     top: 50%;
+//     left: 50%;
+//     transform: translate(-50%, -50%)
+// }
+
+// .pages .txt-center .indices {
+//     justify-content: center
+// }
+
+// .pages .txt-center .descriptions p {
+//     text-align: center
+// }
+
+// .pages .txt-left .descriptions p {
+//     text-align: left
+// }
+
+// .pages .white .descriptions p {
+//     color: #fff
+// }
+
+// .pages .white .indices .index {
+//     border-color: #fff
+// }
+
+// .pages .white .indices .index.active {
+//     background-color: #fff
+// }
+
+// .pages .back.dimmed {
+//     background: rgba(0, 0, 0, .7)
+// }

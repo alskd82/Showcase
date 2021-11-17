@@ -1,0 +1,30 @@
+/* Reset body */
+body {
+    margin: 0;
+    overflow-wrap: break-word;
+}
+
+/* Do not break Korean words */
+:lang(ko) { word-break: keep-all; }
+
+/* Reset img */
+img {
+max-width: 100%;
+height: auto;
+}
+
+/* CSS Reset by [class] */
+[class] {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    list-style: none; /* ol, ul */
+    border: 0; /* button, fieldset, iframe, input, select, table, textarea */
+    background-color: transparent; /* button, dialog, input, mark, meter, progress */
+    border-collapse: collapse; /* table */
+    border-spacing: 0; /* table */
+    -webkit-appearance: none;
+    appearance: none; /* button, input, meter, progress, select, textarea */
+}
+[class]::before,
+[class]::after { box-sizing: border-box; }
