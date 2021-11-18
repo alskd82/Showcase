@@ -3126,8 +3126,7 @@
         Ji = !1;
 
     function er() {
-        Ki = !0, 
-        $("#btnLayerNext").removeClass("blink")
+        Ki = !0, $("#btnLayerNext").removeClass("blink")
     }
 
     function tr() {
@@ -3144,17 +3143,27 @@
         ir = $("#btnLayerNext");
 
     function rr(e) {
-        "active" == e.attr("data-status") && (clearTimeout(nr), nr = null, ir.removeClass("blink"), 
-        nr = setTimeout((function() { ir.addClass("blink") }), 10))
+        "active" == e.attr("data-status") && (clearTimeout(nr), nr = null, ir.removeClass("blink"), nr = setTimeout((function() {
+            ir.addClass("blink")
+        }), 10))
     }
 
-    function appProgressBar_play(e) { qi.set("#app .app-progress-bar", { scaleX: e }) }
-    function appProgressBar_reset() { qi.set("#app .app-progress-bar", { scaleX: 0 }) }
+    function or(e) {
+        qi.set("#app .app-progress-bar", {
+            scaleX: e
+        })
+    }
 
-    ir.on("animationend", (function() { ir.removeClass("blink") })), 
-    qi.set("#app .app-progress-bar", { scaleX: 0 }), 
-
-    appProgressBar_reset();
+    function ar() {
+        qi.set("#app .app-progress-bar", {
+            scaleX: 0
+        })
+    }
+    ir.on("animationend", (function() {
+        ir.removeClass("blink")
+    })), qi.set("#app .app-progress-bar", {
+        scaleX: 0
+    }), ar();
     var sr, ur, lr = !1;
 
     function cr(e) {
@@ -3194,25 +3203,50 @@
         var t = new Xt({
             onComplete: yr,
             onUpdate: function() {
-                appProgressBar_play(t.totalTime() / t.totalDuration())
+                or(t.totalTime() / t.totalDuration())
             }
         });
-        t.to("#cover .showcase span", { alpha: 1, y: "0vh", duration: 2, ease: An.easeOut }, .2), 
-        t.to("#cover .title span", { alpha: 1, y: "0vh", duration: 2, ease: An.easeOut }, .6), 
-        t.to("#cover .slogan span", { alpha: 1, y: "0vh", duration: 2, ease: An.easeOut }, 1), 
-        dr = 0, 
-        ur = setInterval(mr, 2200)
+        t.to("#cover .showcase span", {
+            alpha: 1,
+            y: "0vh",
+            duration: 2,
+            ease: An.easeOut
+        }, .2), t.to("#cover .title span", {
+            alpha: 1,
+            y: "0vh",
+            duration: 2,
+            ease: An.easeOut
+        }, .6), t.to("#cover .slogan span", {
+            alpha: 1,
+            y: "0vh",
+            duration: 2,
+            ease: An.easeOut
+        }, 1), dr = 0, ur = setInterval(mr, 2200)
     }
 
     function mr() {
         ++dr == $("#cover .rolling-bg .back").length && (dr = 0);
         var e = dr + 1;
-        qi.fromTo("#cover .rolling-bg .b" + e, { height: "0%", zIndex: 2 }, { height: "100%", duration: 1, ease: An.easeInOut }), 
-        qi.set("#cover .rolling-bg .back:not(.b" + e + ")", { height: "100%", zIndex: 1 })
+        qi.fromTo("#cover .rolling-bg .b" + e, {
+            height: "0%",
+            zIndex: 2
+        }, {
+            height: "100%",
+            duration: 1,
+            ease: An.easeInOut
+        }), qi.set("#cover .rolling-bg .back:not(.b" + e + ")", {
+            height: "100%",
+            zIndex: 1
+        })
     }
 
-    function gr(e) { return !0 }
-    function vr(e) { return !0 }
+    function gr(e) {
+        return !0
+    }
+
+    function vr(e) {
+        return !0
+    }
 
     function yr() {
         "active" == $(".page#cover").attr("data-status") && (rr($(".page#cover")), cr())
@@ -11121,37 +11155,39 @@
     }
 
     function Kv(e) {
-        qi.set($(".video-dimmed", e), { y: "100%" ), 
-        qi.set($(".video", e), { alpha: 0 }), 
-        qi.set($(".video .progress .bar", e), { width: "0%" }), 
-        zv = $("video", e)[0];
+        qi.set($(".video-dimmed", e), {
+            y: "100%"
+        }), qi.set($(".video", e), {
+            alpha: 0
+        }), qi.set($(".video .progress .bar", e), {
+            width: "0%"
+        }), zv = $("video", e)[0];
         var t = $("video", e).hasClass("plyr");
         if (!zv.inited)
             if (t) {
                 var n = new Wv(zv, {
-                    fullscreen: { enabled: !1 },
+                    fullscreen: {
+                        enabled: !1
+                    },
                     controls: ["play-large", "current-time", "mute", "volume", "progress"]
                 });
-                zv.player = n, zv.muted = !1, 
-                n.on("playing", (function() { Qv(0) })), 
-                n.on("pause", (function() { Qv(1) })), 
-                n.on("playing", (function() {})), 
-                n.on("ended", (function() { window.dispatchEvent(new CustomEvent("SHOWCASE_GO_NEXT")) }))
-            } else 
-                zv.addEventListener("ended", (function() {
+                zv.player = n, zv.muted = !1, n.on("playing", (function() {
+                    Qv(0)
+                })), n.on("pause", (function() {
+                    Qv(1)
+                })), n.on("playing", (function() {})), n.on("ended", (function() {
                     window.dispatchEvent(new CustomEvent("SHOWCASE_GO_NEXT"))
-                })), 
-                zv.addEventListener("playing", (function() {})), 
-                zv.addEventListener("pause", (function() {})), 
-                zv.currentTime = 0;
-        zv.inited = !0, 
-        qv = !1, 
-        0 == t && (zv.muted = !0, 
-        $(".btn-mute", e).addClass("muted"));
+                }))
+            } else zv.addEventListener("ended", (function() {
+                window.dispatchEvent(new CustomEvent("SHOWCASE_GO_NEXT"))
+            })), zv.addEventListener("playing", (function() {})), zv.addEventListener("pause", (function() {})), zv.currentTime = 0;
+        zv.inited = !0, qv = !1, 0 == t && (zv.muted = !0, $(".btn-mute", e).addClass("muted"));
         var i = zv.src;
-        zv.src = "", 
-        requestAnimationFrame((function() { zv.src = i })), 
-        qi.set($(".overlay", e), { alpha: 0 })
+        zv.src = "", requestAnimationFrame((function() {
+            zv.src = i
+        })), qi.set($(".overlay", e), {
+            alpha: 0
+        })
     }
 
     function Zv(e) {
@@ -11165,41 +11201,66 @@
         var t = $("video", e).hasClass("plyr"),
             n = new Xt({
                 onUpdate: function() {
-                    appProgressBar_play(n.totalTime() / n.totalDuration())
+                    or(n.totalTime() / n.totalDuration())
                 }
             });
-        n.to($(".video-dimmed", e), { alpha: 1, y: "0%", easing: An.easeInOut, duration: .6 }, .2), 
-        n.to($(".video", e), { alpha: 1, easing: An.easeOut, duration: 1, o
-            nStart: function() {
-                qv = !0, 
-                t ? (zv.player.rewind(0), zv.player.play()) : zv.play(), 
-                requestAnimationFrame(ny)
-                }
+        n.to($(".video-dimmed", e), {
+            alpha: 1,
+            y: "0%",
+            easing: An.easeInOut,
+            duration: .6
+        }, .2), n.to($(".video", e), {
+            alpha: 1,
+            easing: An.easeOut,
+            duration: 1,
+            onStart: function() {
+                qv = !0, t ? (zv.player.rewind(0), zv.player.play()) : zv.play(), requestAnimationFrame(ny)
+            }
         }, .2)
     }
 
-    function ey(e) { return !0 } 
-    function ty(e) { return !0 }
+    function ey(e) {
+        return !0
+    }
+
+    function ty(e) {
+        return !0
+    }
 
     function ny() {
         var e = zv.currentTime / zv.duration;
-        appProgressBar_play(0), 
-        qv && requestAnimationFrame(ny), 
-        qi.set($(".video .progress .bar", Vv), { width: 100 * e + "%" )}
+        or(0), qv && requestAnimationFrame(ny), qi.set($(".video .progress .bar", Vv), {
+            width: 100 * e + "%"
+        })
+    }
     void 0 !== document.hidden ? (Uv = "hidden", Bv = "visibilitychange") : void 0 !== document.msHidden ? (Uv = "msHidden", Bv = "msvisibilitychange") : void 0 !== document.webkitHidden && (Uv = "webkitHidden", Bv = "webkitvisibilitychange"), void 0 === document.addEventListener || void 0 === document[Uv] || document.addEventListener(Bv, (function(e) {
         document[Uv] ? Gv.Howler.mute(!0) : Gv.Howler.mute(!1)
     }), !1);
     var iy, ry, oy, ay, sy, uy, ly, cy = 1;
-    
+
     function dy(e) {
-        qi.set("#intro1 .b2", { height: "0%" }), 
-        qi.set("#intro1 .photo", { alpha: 0, y: "-2vh" }), 
-        qi.set("#intro1 .photo .back", { height: "100%" }), 
-        qi.set("#intro1 .title", { alpha: 1, y: "0" }), 
-        qi.set("#intro1 .title span", { alpha: 0, y: "-1vh" }), 
-        qi.set("#intro1 .descriptions", { alpha: 0, y: 0 }), 
-        qi.set("#intro1 .descriptions1", { alpha: 1 }), 
-        qi.set("#intro1 .descriptions p", { alpha: 0, y: "-1vh" })
+        qi.set("#intro1 .b2", {
+            height: "0%"
+        }), qi.set("#intro1 .photo", {
+            alpha: 0,
+            y: "-2vh"
+        }), qi.set("#intro1 .photo .back", {
+            height: "100%"
+        }), qi.set("#intro1 .title", {
+            alpha: 1,
+            y: "0"
+        }), qi.set("#intro1 .title span", {
+            alpha: 0,
+            y: "-1vh"
+        }), qi.set("#intro1 .descriptions", {
+            alpha: 0,
+            y: 0
+        }), qi.set("#intro1 .descriptions1", {
+            alpha: 1
+        }), qi.set("#intro1 .descriptions p", {
+            alpha: 0,
+            y: "-1vh"
+        })
     }
 
     function hy(e) {
@@ -11219,16 +11280,41 @@
                 (e = new Xt({
                     onComplete: gy,
                     onUpdate: function() {
-                        appProgressBar_play(e.totalTime() / e.totalDuration())
+                        or(e.totalTime() / e.totalDuration())
                     },
                     onCompleteParams: [2]
-                })).to("#intro1 .title", { y: "-1vh", alpha: 0, duration: 1.4, ease: An.easeOut, onComplete: function() { l_(!1), tr() } }, 0), 
-
-                e.to("#intro1 .photo .back", { height: "0%", duration: 1.4, ease: An.easeInOut }, .1), 
-                e.to("#intro1 .descriptions1", { y: "-1vh", alpha: 0, duration: 1.4, ease: An.easeOut }, .2), 
-                e.to("#intro1 .descriptions2", { alpha: 1, duration: 1, ease: An.easeOut }, 0), 
-                e.to("#intro1 .b2", { height: "100%", duration: 2, ease: An.easeInOut }, .6), 
-                e.to("#intro1 .descriptions2 p", { alpha: 1, y: "0vh", duration: 2, ease: An.easeOut, stagger: .4 }, 1.6)
+                })).to("#intro1 .title", {
+                    y: "-1vh",
+                    alpha: 0,
+                    duration: 1.4,
+                    ease: An.easeOut,
+                    onComplete: function() {
+                        l_(!1), tr()
+                    }
+                }, 0), e.to("#intro1 .photo .back", {
+                    height: "0%",
+                    duration: 1.4,
+                    ease: An.easeInOut
+                }, .1), e.to("#intro1 .descriptions1", {
+                    y: "-1vh",
+                    alpha: 0,
+                    duration: 1.4,
+                    ease: An.easeOut
+                }, .2), e.to("#intro1 .descriptions2", {
+                    alpha: 1,
+                    duration: 1,
+                    ease: An.easeOut
+                }, 0), e.to("#intro1 .b2", {
+                    height: "100%",
+                    duration: 2,
+                    ease: An.easeInOut
+                }, .6), e.to("#intro1 .descriptions2 p", {
+                    alpha: 1,
+                    y: "0vh",
+                    duration: 2,
+                    ease: An.easeOut,
+                    stagger: .4
+                }, 1.6)
         }
         var e
     }
@@ -11237,13 +11323,27 @@
         var t = new Xt({
             onComplete: gy,
             onUpdate: function() {
-                appProgressBar_play(t.totalTime() / t.totalDuration())
+                or(t.totalTime() / t.totalDuration())
             },
             onCompleteParams: [1]
         });
-        t.to("#intro1 .photo", { alpha: 1, y: "0vh", duration: 2, ease: An.easeOut }, 0), 
-        t.to("#intro1 .title span", { alpha: 1, y: "0vh", duration: 2, ease: An.easeOut }, .6), 
-        t.to("#intro1 .descriptions1 p", { alpha: 1, y: "0vh", duration: 2, ease: An.easeOut, stagger: .4 }, 1.2)
+        t.to("#intro1 .photo", {
+            alpha: 1,
+            y: "0vh",
+            duration: 2,
+            ease: An.easeOut
+        }, 0), t.to("#intro1 .title span", {
+            alpha: 1,
+            y: "0vh",
+            duration: 2,
+            ease: An.easeOut
+        }, .6), t.to("#intro1 .descriptions1 p", {
+            alpha: 1,
+            y: "0vh",
+            duration: 2,
+            ease: An.easeOut,
+            stagger: .4
+        }, 1.2)
     }
 
     function gy(e) {
@@ -11273,10 +11373,16 @@
         var t = new Xt({
             onComplete: xy,
             onUpdate: function() {
-                appProgressBar_play(t.totalTime() / t.totalDuration())
+                or(t.totalTime() / t.totalDuration())
             }
         });
-        t.to("#intro2 .descriptions p", { alpha: 1, y: "0vh", duration: 2, ease: An.easeOut, stagger: .4 }, .8)
+        t.to("#intro2 .descriptions p", {
+            alpha: 1,
+            y: "0vh",
+            duration: 2,
+            ease: An.easeOut,
+            stagger: .4
+        }, .8)
     }
 
     function Ty(e) {
@@ -11292,18 +11398,25 @@
     }
 
     function Ay(e) {
-        qi.set($(".back.to-left", e), { backgroundPosition: "100% 50%" }), 
-        qi.set($(".back.to-right", e), { backgroundPosition: "0% 50%" }), 
-        qi.set($(".back.to-bottom", e), { backgroundPosition: "50% 0%" }), 
-        qi.set($(".back.to-top", e), { backgroundPosition: "50% 100%" }), 
-        qi.set($(".title span", e), { alpha: 0, y: "-1.5vh" }), 
-        qi.set($(".descriptions p", e), { alpha: 0, y: "-1.5vh" })
+        qi.set($(".back.to-left", e), {
+            backgroundPosition: "100% 50%"
+        }), qi.set($(".back.to-right", e), {
+            backgroundPosition: "0% 50%"
+        }), qi.set($(".back.to-bottom", e), {
+            backgroundPosition: "50% 0%"
+        }), qi.set($(".back.to-top", e), {
+            backgroundPosition: "50% 100%"
+        }), qi.set($(".title span", e), {
+            alpha: 0,
+            y: "-1.5vh"
+        }), qi.set($(".descriptions p", e), {
+            alpha: 0,
+            y: "-1.5vh"
+        })
     }
 
     function Sy(e) {
-        qi.killTweensOf($(".back", e)), 
-        qi.killTweensOf($(".title span", e)), 
-        qi.killTweensOf($(".descriptions p", e))
+        qi.killTweensOf($(".back", e)), qi.killTweensOf($(".title span", e)), qi.killTweensOf($(".descriptions p", e))
     }
 
     function Ey(e) {
@@ -11311,15 +11424,37 @@
         var t = new Xt({
             onComplete: Py,
             onUpdate: function() {
-                appProgressBar_play(t.totalTime() / t.totalDuration())
+                or(t.totalTime() / t.totalDuration())
             }
         });
-        t.to($(".back.to-right", iy), { backgroundPosition: "100% 50%", duration: 3, ease: xn.easeInOut }, 0), 
-        t.to($(".back.to-left", iy), { backgroundPosition: "0% 50%", duration: 3, ease: xn.easeInOut }, 0), 
-        t.to($(".back.to-bottom", iy), { backgroundPosition: "50% 100%", duration: 3, ease: xn.easeInOut }, 0), 
-        t.to($(".back.to-top", iy), { backgroundPosition: "50% 0%", duration: 3, ease: xn.easeInOut }, 0), 
-        t.to($(".title span", iy), { alpha: 1, y: 0, duration: 2, ease: An.easeOut }, 1), 
-        t.to($(".descriptions p", iy), { alpha: 1, y: 0, duration: 2, ease: An.easeOut, stagger: .4 }, 1.4)
+        t.to($(".back.to-right", iy), {
+            backgroundPosition: "100% 50%",
+            duration: 3,
+            ease: xn.easeInOut
+        }, 0), t.to($(".back.to-left", iy), {
+            backgroundPosition: "0% 50%",
+            duration: 3,
+            ease: xn.easeInOut
+        }, 0), t.to($(".back.to-bottom", iy), {
+            backgroundPosition: "50% 100%",
+            duration: 3,
+            ease: xn.easeInOut
+        }, 0), t.to($(".back.to-top", iy), {
+            backgroundPosition: "50% 0%",
+            duration: 3,
+            ease: xn.easeInOut
+        }, 0), t.to($(".title span", iy), {
+            alpha: 1,
+            y: 0,
+            duration: 2,
+            ease: An.easeOut
+        }, 1), t.to($(".descriptions p", iy), {
+            alpha: 1,
+            y: 0,
+            duration: 2,
+            ease: An.easeOut,
+            stagger: .4
+        }, 1.4)
     }
 
     function Oy(e) {
@@ -11337,12 +11472,19 @@
     function Iy(e) {
         var t = e.attr("data-move-type"),
             n = "reverse" == t ? "-50%" : "50%";
-        qi.set($(".rolling-bg", e), { alpha: 0, x: n });
+        qi.set($(".rolling-bg", e), {
+            alpha: 0,
+            x: n
+        });
         var i = "reverse" == t ? "-100%" : "100%";
-        qi.set($(".rolling-bg .back", e), { x: i }), 
-        qi.set($(".rolling-bg .back.m1", e), { x: "0%" }), 
-        qi.set($(".product-name span", e), { alpha: 0, y: "-1.5vh" }), 
-        oy && (clearInterval(oy), oy = null)
+        qi.set($(".rolling-bg .back", e), {
+            x: i
+        }), qi.set($(".rolling-bg .back.m1", e), {
+            x: "0%"
+        }), qi.set($(".product-name span", e), {
+            alpha: 0,
+            y: "-1.5vh"
+        }), oy && (clearInterval(oy), oy = null)
     }
 
     function My(e) {
@@ -11354,12 +11496,24 @@
         var t = new Xt({
             onComplete: Fy,
             onUpdate: function() {
-                appProgressBar_play(t.totalTime() / t.totalDuration())
+                or(t.totalTime() / t.totalDuration())
             }
         });
-        t.to($(".product-name span", ry), { alpha: 1, y: "0vh", duration: 2, ease: An.easeOut }, 0), 
-        t.to($(".rolling-bg", ry), { alpha: 1, x: "0%", duration: 1.2, ease: An.easeInOut, onComplete: Ry }, .6), 
-        t.to($(".rolling-bg", ry), { alpha: 1, duration: 2 }, 3)
+        t.to($(".product-name span", ry), {
+            alpha: 1,
+            y: "0vh",
+            duration: 2,
+            ease: An.easeOut
+        }, 0), t.to($(".rolling-bg", ry), {
+            alpha: 1,
+            x: "0%",
+            duration: 1.2,
+            ease: An.easeInOut,
+            onComplete: Ry
+        }, .6), t.to($(".rolling-bg", ry), {
+            alpha: 1,
+            duration: 2
+        }, 3)
     }
 
     function Ry() {
@@ -11373,30 +11527,53 @@
             i = ry.attr("data-move-type"),
             r = "reverse" == i ? "100%" : "-100%",
             o = "reverse" == i ? "-100%" : "100%";
-        qi.fromTo($(".rolling-bg .m" + t, ry), { x: "0%" }, { x: r, duration: 1.2, ease: An.easeInOut }),
-        qi.fromTo($(".rolling-bg .m" + n, ry), { x: o }, { x: "0%", duration: 1.2, ease: An.easeInOut}), 
-        ++ay == e && (ay = 0)
+        qi.fromTo($(".rolling-bg .m" + t, ry), {
+            x: "0%"
+        }, {
+            x: r,
+            duration: 1.2,
+            ease: An.easeInOut
+        }), qi.fromTo($(".rolling-bg .m" + n, ry), {
+            x: o
+        }, {
+            x: "0%",
+            duration: 1.2,
+            ease: An.easeInOut
+        }), ++ay == e && (ay = 0)
     }
 
-    function jy(e) { return !0 }
-    function Dy(e) { return !0 }
-    function Fy() { ry && "active" == $(ry).attr("data-status") && (rr(ry), cr()) }
+    function jy(e) {
+        return !0
+    }
+
+    function Dy(e) {
+        return !0
+    }
+
+    function Fy() {
+        ry && "active" == $(ry).attr("data-status") && (rr(ry), cr())
+    }
 
     function $y(e) {
         var t = "reverse" == e.attr("data-move-type") ? "-100%" : "100%";
-        qi.set($(".rolling-bg .back", e), { x: t }), 
-        qi.set($(".rolling-bg .back.b1", e), { x: "0%" }), 
-        qi.set($(".descriptions p", e), { alpha: 0, y: "-1.5vh" }), 
-        qi.set($(".product-name span", e), { alpha: 0, y: "-1.5vh" }), 
-        qi.set($(".indices", e), { alpha: 0, y: "-1.5vh" }), 
-        uy && (clearInterval(uy), uy = null), 
-        $(".indices .index:first-child", e).addClass("active").siblings().removeClass("active")
+        qi.set($(".rolling-bg .back", e), {
+            x: t
+        }), qi.set($(".rolling-bg .back.b1", e), {
+            x: "0%"
+        }), qi.set($(".descriptions p", e), {
+            alpha: 0,
+            y: "-1.5vh"
+        }), qi.set($(".product-name span", e), {
+            alpha: 0,
+            y: "-1.5vh"
+        }), qi.set($(".indices", e), {
+            alpha: 0,
+            y: "-1.5vh"
+        }), uy && (clearInterval(uy), uy = null), $(".indices .index:first-child", e).addClass("active").siblings().removeClass("active")
     }
 
     function Hy(e) {
-        qi.killTweensOf($(".back", e)), 
-        qi.killTweensOf($(".descriptions p", e)), 
-        qi.killTweensOf($(".product-name span", e))
+        qi.killTweensOf($(".back", e)), qi.killTweensOf($(".descriptions p", e)), qi.killTweensOf($(".product-name span", e))
     }
 
     function Uy(e) {
@@ -11404,19 +11581,32 @@
         var t = new Xt({
             onComplete: Vy,
             onUpdate: function() {
-                appProgressBar_play(t.totalTime() / t.totalDuration())
+                or(t.totalTime() / t.totalDuration())
             }
         });
-        t.to($(".descriptions p", sy), { alpha: 1, y: "0vh", duration: 1.4, ease: An.easeOut }, 0), 
-        t.to($(".product-name span", sy), { alpha: 1, y: "0vh", duration: 1.4, ease: An.easeOut }, .4), 
-        t.to($(".indices", sy), { alpha: 1, y: "0vh", duration: 1.4, ease: An.easeOut }, .8), 
-        t.to($(".rolling-bg", sy), { alpha: 1, duration: 3 }, 3),
-
-        function() {
-            uy && (clearInterval(uy), uy = null);
-            ly = 1, 
-            uy = setInterval(By, 2200)
-        }()
+        t.to($(".descriptions p", sy), {
+                alpha: 1,
+                y: "0vh",
+                duration: 1.4,
+                ease: An.easeOut
+            }, 0), t.to($(".product-name span", sy), {
+                alpha: 1,
+                y: "0vh",
+                duration: 1.4,
+                ease: An.easeOut
+            }, .4), t.to($(".indices", sy), {
+                alpha: 1,
+                y: "0vh",
+                duration: 1.4,
+                ease: An.easeOut
+            }, .8), t.to($(".rolling-bg", sy), {
+                alpha: 1,
+                duration: 3
+            }, 3),
+            function() {
+                uy && (clearInterval(uy), uy = null);
+                ly = 1, uy = setInterval(By, 2200)
+            }()
     }
 
     function By() {
@@ -11426,12 +11616,25 @@
             i = sy.attr("data-move-type"),
             r = "reverse" == i ? "80%" : "-80%",
             o = "reverse" == i ? "-100%" : "100%";
-        qi.set($(".rolling-bg .back", sy), { zIndex: 1
-        }), 
-        qi.fromTo($(".rolling-bg .b" + t, sy), { x: "0%", zIndex: 2 }, { x: r, zIndex: 2, duration: 1.2, ease: An.easeInOut }), 
-        qi.fromTo($(".rolling-bg .b" + n, sy), { x: o, zIndex: 3 }, { x: "0%", zIndex: 3, duration: 1.2, ease: An.easeInOut }), 
-        $(".indices .index:eq(" + (n - 1) + ")", sy).addClass("active").siblings().removeClass("active"), 
-        ++ly == e && (ly = 0)
+        qi.set($(".rolling-bg .back", sy), {
+            zIndex: 1
+        }), qi.fromTo($(".rolling-bg .b" + t, sy), {
+            x: "0%",
+            zIndex: 2
+        }, {
+            x: r,
+            zIndex: 2,
+            duration: 1.2,
+            ease: An.easeInOut
+        }), qi.fromTo($(".rolling-bg .b" + n, sy), {
+            x: o,
+            zIndex: 3
+        }, {
+            x: "0%",
+            zIndex: 3,
+            duration: 1.2,
+            ease: An.easeInOut
+        }), $(".indices .index:eq(" + (n - 1) + ")", sy).addClass("active").siblings().removeClass("active"), ++ly == e && (ly = 0)
     }
 
     function qy(e) {
@@ -11462,38 +11665,61 @@
     function Xy(e) {
         var t = new Xt({
             onUpdate: function() {
-                appProgressBar_play(t.totalTime() / t.totalDuration())
+                or(t.totalTime() / t.totalDuration())
             }
         });
-        t.to("#ending .bg-over", { alpha: 1, duration: .75 }, .4), 
-        t.to("#ending .bg-logo", { alpha: 1, scale: 1, duration: .75 }, 1)
+        t.to("#ending .bg-over", {
+            alpha: 1,
+            duration: .75
+        }, .4), t.to("#ending .bg-logo", {
+            alpha: 1,
+            scale: 1,
+            duration: .75
+        }, 1)
     }
 
-    function Yy(e) { return !0 }
-    function Qy(e) { return !0 }
-    window.addEventListener("SHOWCASE_GO_NEXT", (function() { "active" == $(".page#intro1").attr("data-status") && cy < 2 && (l_(!0), er(), cy++, py()) }));
+    function Yy(e) {
+        return !0
+    }
+
+    function Qy(e) {
+        return !0
+    }
+    window.addEventListener("SHOWCASE_GO_NEXT", (function() {
+        "active" == $(".page#intro1").attr("data-status") && cy < 2 && (l_(!0), er(), cy++, py())
+    }));
     var Ky = 1;
 
     function Zy(e) {
-        qi.set("#event .bg-over", { alpha: 0 }), 
-        qi.set("#event .event1", { alpha: 0, left: "50%" }), 
-        qi.set("#event .event2", { alpha: 0, left: "200%" }),  
-        qi.set("#event .indices", { alpha: 0 }), 
-        qi.set("#event .btn", { alpha: 0 }), 
-        $("#event .indices .index:first-child").addClass("active").siblings().removeClass("active")
+        qi.set("#event .bg-over", {
+            alpha: 0
+        }), qi.set("#event .event1", {
+            alpha: 0,
+            left: "50%"
+        }), qi.set("#event .event2", {
+            alpha: 0,
+            left: "200%"
+        }), qi.set("#event .indices", {
+            alpha: 0
+        }), qi.set("#event .btn", {
+            alpha: 0
+        }), $("#event .indices .index:first-child").addClass("active").siblings().removeClass("active")
     }
 
     function Jy(e) {
-        qi.killTweensOf("#event .event"), 
-        qi.killTweensOf("#event .btn")
+        qi.killTweensOf("#event .event"), qi.killTweensOf("#event .btn")
     }
 
     function e_(e) {
-        Ky = 1, 
-        l_(!0), 
-        er(), 
-        n_(!0), 
-        qi.fromTo("#event .btn", { alpha: 0 }, { alpha: 1, yoyo: !0, duration: .5, repeatDelay: .5, repeat: -1 })
+        Ky = 1, l_(!0), er(), n_(!0), qi.fromTo("#event .btn", {
+            alpha: 0
+        }, {
+            alpha: 1,
+            yoyo: !0,
+            duration: .5,
+            repeatDelay: .5,
+            repeat: -1
+        })
     }
 
     function t_() {
@@ -11505,13 +11731,23 @@
                 (e = new Xt({
                     onComplete: i_,
                     onUpdate: function() {
-                        appProgressBar_play(e.totalTime() / e.totalDuration())
+                        or(e.totalTime() / e.totalDuration())
                     },
                     onCompleteParams: [2]
-                })).to("#event .event1", { left: "-200%", alpha: 1, duration: 1, ease: An.easeInOut}, 0), 
-                e.to("#event .event2", { left: "50%", alpha: 1, duration: 1, ease: An.easeInOut }, 0), 
-                e.to("#event .indices", { alpha: 1, duration: .8 }, .4), 
-                $("#event .indices .index:eq(1)").addClass("active").siblings().removeClass("active")
+                })).to("#event .event1", {
+                    left: "-200%",
+                    alpha: 1,
+                    duration: 1,
+                    ease: An.easeInOut
+                }, 0), e.to("#event .event2", {
+                    left: "50%",
+                    alpha: 1,
+                    duration: 1,
+                    ease: An.easeInOut
+                }, 0), e.to("#event .indices", {
+                    alpha: 1,
+                    duration: .8
+                }, .4), $("#event .indices .index:eq(1)").addClass("active").siblings().removeClass("active")
         }
         var e
     }
@@ -11520,14 +11756,24 @@
         var t = new Xt({
             onComplete: i_,
             onUpdate: function() {
-                appProgressBar_play(t.totalTime() / t.totalDuration())
+                or(t.totalTime() / t.totalDuration())
             },
             onCompleteParams: [1]
         });
-        t.to("#event .event1", { left: "50%", alpha: 1, duration: 1, ease: An.easeInOut}, 0), 
-        t.to("#event .event2", { left: "200%", alpha: 1, duration: 1, ease: An.easeInOut }, 0), 
-        t.to("#event .indices", { alpha: 1, duration: .8 }, .4), 
-        $("#event .indices .index:eq(0)").addClass("active").siblings().removeClass("active")
+        t.to("#event .event1", {
+            left: "50%",
+            alpha: 1,
+            duration: 1,
+            ease: An.easeInOut
+        }, 0), t.to("#event .event2", {
+            left: "200%",
+            alpha: 1,
+            duration: 1,
+            ease: An.easeInOut
+        }, 0), t.to("#event .indices", {
+            alpha: 1,
+            duration: .8
+        }, .4), $("#event .indices .index:eq(0)").addClass("active").siblings().removeClass("active")
     }
 
     function i_(e) {
@@ -11550,7 +11796,9 @@
         s_ = !0,
         u_ = 1;
 
-    function l_(e) { s_ = e }
+    function l_(e) {
+        s_ = e
+    }
 
     function c_() {
         var e = $("#app .page#cover");
@@ -11613,13 +11861,7 @@
     }
 
     function h_(e, t) {
-        tr(), 
-        s_ = !1, g_(e), 
-        e.attr("data-status", "active"), 
-        e.prev().attr("data-status", "sibling").prevAll().attr("data-status", "prev"), 
-        e.next().attr("data-status", "sibling").nextAll().attr("data-status", "next"), 
-        d_(e).start(e, t), 
-        $(window).trigger("resize")
+        tr(), s_ = !1, g_(e), e.attr("data-status", "active"), e.prev().attr("data-status", "sibling").prevAll().attr("data-status", "prev"), e.next().attr("data-status", "sibling").nextAll().attr("data-status", "next"), d_(e).start(e, t), $(window).trigger("resize")
     }
 
     function f_() {
@@ -11645,46 +11887,96 @@
     function m_(e, t, n) {
         if (!s_) {
             var i = $('.page[data-status="active"]');
-            i[0] != e[0] && (er(), 
-            s_ = !0, 
-            u_ = 1, 
-            i[0] && d_(i).stop(i), 
-            e.attr("data-status", "active"), 
-            t || (t = i.index() < e.index() ? "next" : "prev"), 
-            $("#app").attr("data-dir", t), 
-            d_(e).stop(e, n), 
-            d_(e).reset(e, n), 
-            g_(e), 
-            qi.globalTimeline.clear(), 
-            setTimeout((function() {
-                var r;
-                if("next" == t ) r = e.attr("data-move-dir")
-                else             r = i.attr("data-move-dir")  
-                i.removeAttr("style"), 
-                e.removeAttr("style"), 
-                qi.set(i, { zIndex: 4 }), 
-                qi.set(e, { zIndex: 5 });
+            i[0] != e[0] && (er(), s_ = !0, u_ = 1, i[0] && d_(i).stop(i), e.attr("data-status", "active"), t || (t = i.index() < e.index() ? "next" : "prev"), $("#app").attr("data-dir", t), d_(e).stop(e, n), d_(e).reset(e, n), g_(e), qi.globalTimeline.clear(), setTimeout((function() {
+                var r = "next" == t ? e.attr("data-move-dir") : i.attr("data-move-dir");
+                i.removeAttr("style"), e.removeAttr("style"), qi.set(i, {
+                    zIndex: 4
+                }), qi.set(e, {
+                    zIndex: 5
+                });
                 var o = new Xt({
                     onComplete: function() {
-                        e.prev().attr("data-status", "sibling").prev().attr("data-status", "sibling-sibling").prevAll().attr("data-status", "prev"), 
-                        e.next().attr("data-status", "sibling").next().attr("data-status", "sibling-sibling").nextAll().attr("data-status", "next"), 
-                        s_ = !1, h_(e, n), 
-                        qi.set(".page", { zIndex: 1 }), 
-                        qi.set(e, { zIndex: 2 })
-                    }); 
+                        e.prev().attr("data-status", "sibling").prev().attr("data-status", "sibling-sibling").prevAll().attr("data-status", "prev"), e.next().attr("data-status", "sibling").next().attr("data-status", "sibling-sibling").nextAll().attr("data-status", "next"), s_ = !1, h_(e, n), qi.set(".page", {
+                            zIndex: 1
+                        }), qi.set(e, {
+                            zIndex: 2
+                        })
+                    }
+                });
                 "fade" == (r = r || "vertical") ? function(e, t, n, i) {
-                    "next" == t ? (
-                        qi.set(n, { zIndex: 4 }), qi.set(i, { zIndex: 5 }), 
-                        e.fromTo(n, { y: 0, x: 0 }, { y: 0, x: 0, duration: .5 * u_, ease: kn.easeOut }, 0), 
-                        e.fromTo(i, { y: 0, x: 0, alpha: 0 }, { y: 0, x: 0, alpha: 1, duration: .5 * u_, ease: kn.easeOut }, 0), 
-                        e.fromTo($(".page-inner", n), { y: 0, x: 0 }, { y: 0, x: 0, duration: .5 * u_, ease: kn.easeOut }, 0), 
-                        e.fromTo($(".page-inner", i), { y: 0, x: "0%" }, { y: 0, x: 0, duration: .5 * u_,  ease: kn.easeOut }, 0)
-                    ) : (
-                        e.fromTo(n, { y: 0, x: 0 }, { y: 0, x: 0, duration: .5 * u_, ease: kn.easeOut }, 0), 
-                        e.fromTo(i, { y: 0, x: 0, alpha: 0 }, { y: 0, x: 0, alpha: 1, duration: .5 * u_, ease: kn.easeOut }, 0), 
-                        e.fromTo($(".page-inner", i), { y: 0, x: 0 }, { y: 0, x: 0, duration: .5 * u_, ease: kn.easeOut }, 0), 
-                        e.fromTo($(".page-inner", n), { y: 0, x: 0 }, { y: 0, x: "0%", duration: .5 * u_, ease: kn.easeOut }, 0)
-                    )
+                    "next" == t ? (qi.set(n, {
+                        zIndex: 4
+                    }), qi.set(i, {
+                        zIndex: 5
+                    }), e.fromTo(n, {
+                        y: 0,
+                        x: 0
+                    }, {
+                        y: 0,
+                        x: 0,
+                        duration: .5 * u_,
+                        ease: kn.easeOut
+                    }, 0), e.fromTo(i, {
+                        y: 0,
+                        x: 0,
+                        alpha: 0
+                    }, {
+                        y: 0,
+                        x: 0,
+                        alpha: 1,
+                        duration: .5 * u_,
+                        ease: kn.easeOut
+                    }, 0), e.fromTo($(".page-inner", n), {
+                        y: 0,
+                        x: 0
+                    }, {
+                        y: 0,
+                        x: 0,
+                        duration: .5 * u_,
+                        ease: kn.easeOut
+                    }, 0), e.fromTo($(".page-inner", i), {
+                        y: 0,
+                        x: "0%"
+                    }, {
+                        y: 0,
+                        x: 0,
+                        duration: .5 * u_,
+                        ease: kn.easeOut
+                    }, 0)) : (e.fromTo(n, {
+                        y: 0,
+                        x: 0
+                    }, {
+                        y: 0,
+                        x: 0,
+                        duration: .5 * u_,
+                        ease: kn.easeOut
+                    }, 0), e.fromTo(i, {
+                        y: 0,
+                        x: 0,
+                        alpha: 0
+                    }, {
+                        y: 0,
+                        x: 0,
+                        alpha: 1,
+                        duration: .5 * u_,
+                        ease: kn.easeOut
+                    }, 0), e.fromTo($(".page-inner", i), {
+                        y: 0,
+                        x: 0
+                    }, {
+                        y: 0,
+                        x: 0,
+                        duration: .5 * u_,
+                        ease: kn.easeOut
+                    }, 0), e.fromTo($(".page-inner", n), {
+                        y: 0,
+                        x: 0
+                    }, {
+                        y: 0,
+                        x: "0%",
+                        duration: .5 * u_,
+                        ease: kn.easeOut
+                    }, 0))
                 }(o, t, i, e) : "horizontal" == r ? function(e, t, n, i) {
                     var r = i.attr("data-move-type");
                     if ("next" == t) {
@@ -11692,87 +11984,318 @@
                             a = "reverse" == r ? "-100%" : "100%",
                             s = "reverse" == r ? "-60%" : "60%",
                             u = "reverse" == r ? "-100%" : "100%";
-                        e.fromTo(n, { y: 0, x: 0 }, { y: 0, x: o, duration: u_, ease: xn.easeInOut }, 0), 
-                        e.fromTo(i, { y: 0, x: u }, { y: 0, x: 0, duration: u_, ease: xn.easeInOut }, 0), 
-                        i.hasClass("product-detail") ? (
-                            e.fromTo($(".page-inner", n), { y: 0, x: 0 }, { y: 0, x: a, duration: u_, ease: xn.easeInOut }, 0), 
-                            e.fromTo($(".page-inner", i), { y: 0, x: "0%" }, { y: 0, x: 0, duration: u_, ease: xn.easeInOut}, 0)
-                        ) : ( 
-                            e.fromTo($(".page-inner", n), { y: 0, x: 0 }, { y: 0, x: s, duration: u_, ease: xn.easeInOut }, 0), 
-                            e.fromTo($(".page-inner", i), { y: 0, x: "0%" }, { y: 0, x: 0, duration: u_, ease: xn.easeInOut }, 0)
-                        )
+                        e.fromTo(n, {
+                            y: 0,
+                            x: 0
+                        }, {
+                            y: 0,
+                            x: o,
+                            duration: u_,
+                            ease: xn.easeInOut
+                        }, 0), e.fromTo(i, {
+                            y: 0,
+                            x: u
+                        }, {
+                            y: 0,
+                            x: 0,
+                            duration: u_,
+                            ease: xn.easeInOut
+                        }, 0), i.hasClass("product-detail") ? (e.fromTo($(".page-inner", n), {
+                            y: 0,
+                            x: 0
+                        }, {
+                            y: 0,
+                            x: a,
+                            duration: u_,
+                            ease: xn.easeInOut
+                        }, 0), e.fromTo($(".page-inner", i), {
+                            y: 0,
+                            x: "0%"
+                        }, {
+                            y: 0,
+                            x: 0,
+                            duration: u_,
+                            ease: xn.easeInOut
+                        }, 0)) : (e.fromTo($(".page-inner", n), {
+                            y: 0,
+                            x: 0
+                        }, {
+                            y: 0,
+                            x: s,
+                            duration: u_,
+                            ease: xn.easeInOut
+                        }, 0), e.fromTo($(".page-inner", i), {
+                            y: 0,
+                            x: "0%"
+                        }, {
+                            y: 0,
+                            x: 0,
+                            duration: u_,
+                            ease: xn.easeInOut
+                        }, 0))
                     } else {
                         var l = "reverse" == r ? "-100%" : "100%",
                             c = "reverse" == r ? "100%" : "-100%",
                             d = "reverse" == r ? "60%" : "-60%",
                             h = "reverse" == r ? "100%" : "-100%";
-                        e.fromTo(i, { y: 0,x: h }, {y: 0, x: 0, duration: u_, ease: xn.easeInOut }, 0), 
-                        e.fromTo(n, { y: 0, x: 0 }, { y: 0, x: l, duration: u_, ease: xn.easeInOut }, 0), 
-                        i.hasClass("product-detail__") ? (
-                            e.fromTo($(".page-inner", i), { y: 0, x: c }, { y: 0, x: 0, duration: u_, ease: xn.easeInOut }, 0), 
-                            e.fromTo($(".page-inner", n), { y: 0, x: 0 }, { y: 0, x: "0%", duration: u_, ease: xn.easeInOut }, 0)
-                        ) : (
-                            e.fromTo($(".page-inner", i), { y: 0, x: d }, { y: 0, x: 0, duration: u_, ease: xn.easeInOut }, 0), 
-                            e.fromTo($(".page-inner", n), { y: 0, x: 0 }, { y: 0, x: "0%", duration: u_, ease: xn.easeInOut }, 0)
-                        )
+                        e.fromTo(i, {
+                            y: 0,
+                            x: h
+                        }, {
+                            y: 0,
+                            x: 0,
+                            duration: u_,
+                            ease: xn.easeInOut
+                        }, 0), e.fromTo(n, {
+                            y: 0,
+                            x: 0
+                        }, {
+                            y: 0,
+                            x: l,
+                            duration: u_,
+                            ease: xn.easeInOut
+                        }, 0), i.hasClass("product-detail__") ? (e.fromTo($(".page-inner", i), {
+                            y: 0,
+                            x: c
+                        }, {
+                            y: 0,
+                            x: 0,
+                            duration: u_,
+                            ease: xn.easeInOut
+                        }, 0), e.fromTo($(".page-inner", n), {
+                            y: 0,
+                            x: 0
+                        }, {
+                            y: 0,
+                            x: "0%",
+                            duration: u_,
+                            ease: xn.easeInOut
+                        }, 0)) : (e.fromTo($(".page-inner", i), {
+                            y: 0,
+                            x: d
+                        }, {
+                            y: 0,
+                            x: 0,
+                            duration: u_,
+                            ease: xn.easeInOut
+                        }, 0), e.fromTo($(".page-inner", n), {
+                            y: 0,
+                            x: 0
+                        }, {
+                            y: 0,
+                            x: "0%",
+                            duration: u_,
+                            ease: xn.easeInOut
+                        }, 0))
                     }
                 }(o, t, i, e) : "curtain" == r ? function(e, t, n, i) {
-                    "next" == t ? (
-                        qi.set(n, { zIndex: 5 }), 
-                        qi.set(i, { zIndex: 4 }), 
-                        e.fromTo($(".page-inner", n), { y: 0, x: 0 }, { y: "100%", x: "0%", duration: u_, ease: An.easeInOut }, 0), 
-                        e.fromTo($(".curtain > *", n), { scaleX: 0 }, { scaleX: 1, duration: u_, ease: An.easeInOut }, .75 * u_), 
-                        e.fromTo(i, { y: 0, x: 0, alpha: 0 }, { y: 0, x: 0, duration: u_, ease: kn.easeOut }, .75 * u_), 
-                        e.fromTo(n, { y: 0, x: 0, alpha: 1 }, { y: 0, x: 0, alpha: 1, duration: u_, ease: kn.easeOut }, .75 * u_), 
-                        e.fromTo($(".page-inner", i), { y: 0, x: 0 }, { y: 0, x: 0, duration: u_, ease: kn.easeOut }, .75 * u_), 
-                        e.set(i, { alpha: 1  })
-                    ) : (
-                        qi.set(n, { zIndex: 4 }), 
-                        qi.set(i, { zIndex: 5 }),
-                        e.fromTo($(".curtain > *", n), { scaleX: 1 }, { scaleX: 0, duration: u_, ease: An.easeInOut }, 0), 
-                        e.fromTo(n, { y: 0, x: 0, alpha: 0 }, { y: 0, x: 0, duration: u_, ease: kn.easeOut }, 0), 
-                        e.fromTo(i, { y: 0, x: 0, alpha: 1 }, { y: 0, x: 0, alpha: 1, duration: u_, ease: kn.easeOut }, 0), 
-                        e.fromTo($(".page-inner", i), { y: 0, x: 0 }, { y: 0, x: 0, duration: u_, ease: kn.easeOut }, 0), 
-                        e.fromTo($(".page-inner", n), { y: 0, x: 0 }, { y: 0, x: "0%", duration: u_, ease: kn.easeOut }, 0), 
-                        e.set(n, {  alpha: 1 })
-                    )
-                }(o, t, i, e) 
-                : function(e, t, n, i) {
-                    var r;
-                    if("next" == t)  r = i.attr("data-move-type")
-                    else             r = n.attr("data-move-type");
-
-                    ("next" == t) ? 
-                        (
-                            e.fromTo(n, { x: 0, y: 0 }, { x: 0, y: "-100%", duration: u_, ease: xn.easeInOut }, 0), 
-                            e.fromTo(i, { x: 0, y: "100%" }, { x: 0, y: 0, duration: u_, ease: xn.easeInOut }, 0), 
-                            "linear" == r ? (e.set($(".page-inner", n), { x: 0, y: 0 }, 0), e.set($(".page-inner", i), { x: 0, y: 0 }, 0)
-                        ) 
-                    : 
-                        ("collapse" == r) ? (
-                                e.fromTo($(".page-inner", n), { x: 0, y: 0 }, { x: 0, y: "100%", duration: u_, ease: xn.easeInOut }, 0), 
-                                e.fromTo($(".page-inner", i), { x: 0, y: "-100%" }, { x: 0, y: 0, duration: u_, ease: xn.easeInOut }, 0)
-                            ) 
-                            : (
-                                e.fromTo($(".page-inner", n), { x: 0, y: 0 }, { x: 0, y: "75%", duration: u_, ease: xn.easeInOut }, 0), 
-                                e.fromTo($(".page-inner", i), { x: 0, y: "-75%" }, { x: 0, y: 0, duration: u_, ease: xn.easeInOut }, 0)
-                                )
-                    ) 
-                    : (
-                            e.fromTo(i, { x: 0, y: "-100%" }, { x: 0, y: 0, duration: u_, ease: xn.easeInOut }, 0), 
-                            e.fromTo(n, { x: 0, y: 0 }, { x: 0, y: "100%", duration: u_, ease: xn.easeInOut }, 0), 
-                            "linear" == r ? (e.set($(".page-inner", n), { x: 0, y: 0 }, 0), e.set($(".page-inner", i), { x: 0, y: 0 }, 0)
-                        ) 
-                        : ("collapse" == r) ? (
-                            e.fromTo($(".page-inner", i), { x: 0, y: "100%" }, { x: 0, y: 0, duration: u_, ease: xn.easeInOut }, 0), 
-                            e.fromTo($(".page-inner", n), { x: 0, y: 0 }, { x: 0, y: "-100%", duration: u_, ease: xn.easeInOut}, 0)
-                            ) : (
-                                e.fromTo($(".page-inner", i), { x: 0, y: "75%" }, { x: 0, y: 0, duration: u_, ease: xn.easeInOut }, 0), 
-                                e.fromTo($(".page-inner", n), { x: 0, y: 0 }, { x: 0, y: "-75%", duration: u_, ease: xn.easeInOut}, 0)
-                                )
-                        )
-                }(o, t, i, e), 
-                appProgressBar_reset();
+                    "next" == t ? (qi.set(n, {
+                        zIndex: 5
+                    }), qi.set(i, {
+                        zIndex: 4
+                    }), e.fromTo($(".page-inner", n), {
+                        y: 0,
+                        x: 0
+                    }, {
+                        y: "100%",
+                        x: "0%",
+                        duration: u_,
+                        ease: An.easeInOut
+                    }, 0), e.fromTo($(".curtain > *", n), {
+                        scaleX: 0
+                    }, {
+                        scaleX: 1,
+                        duration: u_,
+                        ease: An.easeInOut
+                    }, .75 * u_), e.fromTo(i, {
+                        y: 0,
+                        x: 0,
+                        alpha: 0
+                    }, {
+                        y: 0,
+                        x: 0,
+                        duration: u_,
+                        ease: kn.easeOut
+                    }, .75 * u_), e.fromTo(n, {
+                        y: 0,
+                        x: 0,
+                        alpha: 1
+                    }, {
+                        y: 0,
+                        x: 0,
+                        alpha: 1,
+                        duration: u_,
+                        ease: kn.easeOut
+                    }, .75 * u_), e.fromTo($(".page-inner", i), {
+                        y: 0,
+                        x: 0
+                    }, {
+                        y: 0,
+                        x: 0,
+                        duration: u_,
+                        ease: kn.easeOut
+                    }, .75 * u_), e.set(i, {
+                        alpha: 1
+                    })) : (qi.set(n, {
+                        zIndex: 4
+                    }), qi.set(i, {
+                        zIndex: 5
+                    }), e.fromTo($(".curtain > *", n), {
+                        scaleX: 1
+                    }, {
+                        scaleX: 0,
+                        duration: u_,
+                        ease: An.easeInOut
+                    }, 0), e.fromTo(n, {
+                        y: 0,
+                        x: 0,
+                        alpha: 0
+                    }, {
+                        y: 0,
+                        x: 0,
+                        duration: u_,
+                        ease: kn.easeOut
+                    }, 0), e.fromTo(i, {
+                        y: 0,
+                        x: 0,
+                        alpha: 1
+                    }, {
+                        y: 0,
+                        x: 0,
+                        alpha: 1,
+                        duration: u_,
+                        ease: kn.easeOut
+                    }, 0), e.fromTo($(".page-inner", i), {
+                        y: 0,
+                        x: 0
+                    }, {
+                        y: 0,
+                        x: 0,
+                        duration: u_,
+                        ease: kn.easeOut
+                    }, 0), e.fromTo($(".page-inner", n), {
+                        y: 0,
+                        x: 0
+                    }, {
+                        y: 0,
+                        x: "0%",
+                        duration: u_,
+                        ease: kn.easeOut
+                    }, 0), e.set(n, {
+                        alpha: 1
+                    }))
+                }(o, t, i, e) : function(e, t, n, i) {
+                    var r = "next" == t ? i.attr("data-move-type") : n.attr("data-move-type");
+                    "next" == t ? (e.fromTo(n, {
+                        x: 0,
+                        y: 0
+                    }, {
+                        x: 0,
+                        y: "-100%",
+                        duration: u_,
+                        ease: xn.easeInOut
+                    }, 0), e.fromTo(i, {
+                        x: 0,
+                        y: "100%"
+                    }, {
+                        x: 0,
+                        y: 0,
+                        duration: u_,
+                        ease: xn.easeInOut
+                    }, 0), "linear" == r ? (e.set($(".page-inner", n), {
+                        x: 0,
+                        y: 0
+                    }, 0), e.set($(".page-inner", i), {
+                        x: 0,
+                        y: 0
+                    }, 0)) : "collapse" == r ? (e.fromTo($(".page-inner", n), {
+                        x: 0,
+                        y: 0
+                    }, {
+                        x: 0,
+                        y: "100%",
+                        duration: u_,
+                        ease: xn.easeInOut
+                    }, 0), e.fromTo($(".page-inner", i), {
+                        x: 0,
+                        y: "-100%"
+                    }, {
+                        x: 0,
+                        y: 0,
+                        duration: u_,
+                        ease: xn.easeInOut
+                    }, 0)) : (e.fromTo($(".page-inner", n), {
+                        x: 0,
+                        y: 0
+                    }, {
+                        x: 0,
+                        y: "75%",
+                        duration: u_,
+                        ease: xn.easeInOut
+                    }, 0), e.fromTo($(".page-inner", i), {
+                        x: 0,
+                        y: "-75%"
+                    }, {
+                        x: 0,
+                        y: 0,
+                        duration: u_,
+                        ease: xn.easeInOut
+                    }, 0))) : (e.fromTo(i, {
+                        x: 0,
+                        y: "-100%"
+                    }, {
+                        x: 0,
+                        y: 0,
+                        duration: u_,
+                        ease: xn.easeInOut
+                    }, 0), e.fromTo(n, {
+                        x: 0,
+                        y: 0
+                    }, {
+                        x: 0,
+                        y: "100%",
+                        duration: u_,
+                        ease: xn.easeInOut
+                    }, 0), "linear" == r ? (e.set($(".page-inner", n), {
+                        x: 0,
+                        y: 0
+                    }, 0), e.set($(".page-inner", i), {
+                        x: 0,
+                        y: 0
+                    }, 0)) : "collapse" == r ? (e.fromTo($(".page-inner", i), {
+                        x: 0,
+                        y: "100%"
+                    }, {
+                        x: 0,
+                        y: 0,
+                        duration: u_,
+                        ease: xn.easeInOut
+                    }, 0), e.fromTo($(".page-inner", n), {
+                        x: 0,
+                        y: 0
+                    }, {
+                        x: 0,
+                        y: "-100%",
+                        duration: u_,
+                        ease: xn.easeInOut
+                    }, 0)) : (e.fromTo($(".page-inner", i), {
+                        x: 0,
+                        y: "75%"
+                    }, {
+                        x: 0,
+                        y: 0,
+                        duration: u_,
+                        ease: xn.easeInOut
+                    }, 0), e.fromTo($(".page-inner", n), {
+                        x: 0,
+                        y: 0
+                    }, {
+                        x: 0,
+                        y: "-75%",
+                        duration: u_,
+                        ease: xn.easeInOut
+                    }, 0)))
+                }(o, t, i, e), ar()
             }), 60))
         }
     }
@@ -11781,24 +12304,19 @@
         $(".back", e).each((function() {
             var e = $(this).attr("data-bg");
             e && "" != e && $(this).css("background-image", "url(".concat(e, ")"))
-        })), 
-        $(".back", e.prev()).each((function() {
+        })), $(".back", e.prev()).each((function() {
             var e = $(this).attr("data-bg");
             e && "" != e && $(this).css("background-image", "url(".concat(e, ")"))
-        })), 
-        $(".back", e.next()).each((function() {
+        })), $(".back", e.next()).each((function() {
             var e = $(this).attr("data-bg");
             e && "" != e && $(this).css("background-image", "url(".concat(e, ")"))
-        })), 
-        $("img", e).each((function() {
+        })), $("img", e).each((function() {
             var e = $(this).attr("data-src");
             e && "" != e && $(this).attr("src", e)
-        })), 
-        $("img", e.prev()).each((function() {
+        })), $("img", e.prev()).each((function() {
             var e = $(this).attr("data-src");
             e && "" != e && $(this).attr("src", e)
-        })), 
-        $("img", e.next()).each((function() {
+        })), $("img", e.next()).each((function() {
             var e = $(this).attr("data-src");
             e && "" != e && $(this).attr("src", e)
         }))
@@ -11822,10 +12340,8 @@
     var b_ = !1;
     $(window).on("click touchstart", (function(e) {
         b_ || ($(".video video").each((function(e, t) {
-            t.play(), 
-            t.pause()
-        })),
-         b_ = !0)
+            t.play(), t.pause()
+        })), b_ = !0)
     }));
     $("#appLoading");
     var w_ = "#debug" == window.location.hash ? .1 : 5,
@@ -11835,34 +12351,51 @@
     function x_() {
         setTimeout((function() {
             $("#appLoading .coach-guide").addClass("active"), setTimeout((function() {
-                $(window).trigger("resize"), 
-                qi.to("#appLoading .guide", { autoAlpha: 0, duration: .5 }), 
-                qi.to("#appLoading .loading-area", { autoAlpha: 1, duration: .5, onComplete: A_ })
-            }), k_), 
-            $(window).trigger("resize") }), T_), 
-            qi.set("#appLoading .logo", { alpha: 1 })
+                $(window).trigger("resize"), qi.to("#appLoading .guide", {
+                    autoAlpha: 0,
+                    duration: .5
+                }), qi.to("#appLoading .loading-area", {
+                    autoAlpha: 1,
+                    duration: .5,
+                    onComplete: A_
+                })
+            }), k_), $(window).trigger("resize")
+        }), T_), qi.set("#appLoading .logo", {
+            alpha: 1
+        })
     }
 
     function A_() {
-        qi.to("#appLoading .logo", { alpha: 1, duration: w_, onComplete: S_ });
-        var e = qi.timeline({ repeat: -1 });
-        e.to("#appLoading .logo svg", { rotateX: -360, duration: 1.5, ease: xn.easeInOut }, 0), 
-        e.to("#appLoading .logo svg", { rotateY: -360, duration: 1.5, ease: xn.easeInOut }, .9)
+        qi.to("#appLoading .logo", {
+            alpha: 1,
+            duration: w_,
+            onComplete: S_
+        });
+        var e = qi.timeline({
+            repeat: -1
+        });
+        e.to("#appLoading .logo svg", {
+            rotateX: -360,
+            duration: 1.5,
+            ease: xn.easeInOut
+        }, 0), e.to("#appLoading .logo svg", {
+            rotateY: -360,
+            duration: 1.5,
+            ease: xn.easeInOut
+        }, .9)
     }
 
     function S_() {
-        $("#app").addClass("loading-ended"), 
-        window.dispatchEvent(new CustomEvent("SHOWCASE_LOADING_COMPLETE")), 
-        qi.to("#appLoading", { autoAlpha: 0,duration: .5 })
+        $("#app").addClass("loading-ended"), window.dispatchEvent(new CustomEvent("SHOWCASE_LOADING_COMPLETE")), qi.to("#appLoading", {
+            autoAlpha: 0,
+            duration: .5
+        })
     }
     window.addEventListener("load", (function() {
             $("#app").addClass("loaded")
-        })), 
-    window.addEventListener("DOMContentLoaded", (function() {
-            x_(), 
-            $(window).trigger("resize")
-        })), 
-        er(),
+        })), window.addEventListener("DOMContentLoaded", (function() {
+            x_(), $(window).trigger("resize")
+        })), er(),
         function() {
             function e() {
                 var e = window.innerHeight,
@@ -11874,35 +12407,31 @@
                 var r = $(".container .visual-block .pages").width();
                 document.documentElement.style.setProperty("--fullwidth", "".concat(r, "px"))
             }
-            document.querySelector("#app").addEventListener("mousewheel", (function(e) {
+            Zi.addEventListener("mousewheel", (function(e) {
                 if (Ki || "autoplaying" == $("#app").attr("data-status") || Ji) return !1;
                 e.preventDefault();
-                var t = e.deltaY, n = e.deltaX;
+                var t = e.deltaY,
+                    n = e.deltaX;
                 return Math.abs(n) > 4 && n > 0 || Math.abs(t) > 4 && t > 0 ? (Ji = !0, setTimeout((function() {
                     Ji = !1
                 }), 500), window.dispatchEvent(new CustomEvent("SHOWCASE_GO_NEXT"))) : (Math.abs(n) > 4 && n < 0 || Math.abs(t) > 4 && t < 0) && (Ji = !0, setTimeout((function() {
                     Ji = !1
                 }), 500), window.dispatchEvent(new CustomEvent("SHOWCASE_GO_PREV"))), !1
-            })), 
-            Qi()(document.querySelector("#app")), 
-            document.querySelector("#app").addEventListener("swipe", (function(e) {
+            })), Qi()(Zi), Zi.addEventListener("swipe", (function(e) {
                 if (Ki || "autoplaying" == $("#app").attr("data-status")) return !1;
                 var t = e.detail.directions;
                 t.left || t.top ? window.dispatchEvent(new CustomEvent("SHOWCASE_GO_NEXT")) : (t.right || t.bottom) && window.dispatchEvent(new CustomEvent("SHOWCASE_GO_PREV"))
-            })), 
-            document.getElementById("btnLayerNext").addEventListener("click", (function(e) {
+            })), document.getElementById("btnLayerNext").addEventListener("click", (function(e) {
                 if (Ki || "autoplaying" == $("#app").attr("data-status")) return !1;
                 window.dispatchEvent(new CustomEvent("SHOWCASE_GO_NEXT"))
-            })), 
-            document.getElementById("btnLayerPrev").addEventListener("click", (function(e) {
+            })), document.getElementById("btnLayerPrev").addEventListener("click", (function(e) {
                 if (Ki || "autoplaying" == $("#app").attr("data-status")) return !1;
                 window.dispatchEvent(new CustomEvent("SHOWCASE_GO_PREV"))
-            })), 
-            $(window).on("resize", (function() {
-                requestAnimationFrame(e), 
-                setTimeout((function() { e() }), 100)
-            })), 
-            $(window).on("orientationchange", (function() {
+            })), $(window).on("resize", (function() {
+                requestAnimationFrame(e), setTimeout((function() {
+                    e()
+                }), 100)
+            })), $(window).on("orientationchange", (function() {
                 requestAnimationFrame(e);
                 var t = window.orientation;
                 90 == t || -90 == t ? requestAnimationFrame((function() {
@@ -11910,25 +12439,15 @@
                 })) : requestAnimationFrame((function() {
                     $(".only-portrait").removeClass("active")
                 }))
-            })), 
-            $(window).on("keydown", (function(e) {
+            })), $(window).on("keydown", (function(e) {
                 if (Ki) return !1;
                 37 != e.keyCode && 38 != e.keyCode || (Ki = !0, window.dispatchEvent(new CustomEvent("SHOWCASE_GO_PREV"))), 39 != e.keyCode && 40 != e.keyCode || (Ki = !0, window.dispatchEvent(new CustomEvent("SHOWCASE_GO_NEXT")))
             })), requestAnimationFrame(e)
-        }(), 
-        qi.set("#app .page", { y: "100%" }), 
-        $(".page", $(".app .pages") ).attr("data-status", "next"), 
-        window.addEventListener("SHOWCASE_LOADING_COMPLETE", c_), 
-        window.addEventListener("SHOWCASE_GO_PREV", f_), 
-        window.addEventListener("SHOWCASE_GO_NEXT", p_), 
-        window.addEventListener("SHOWCASE_GO_PAGE", v_), 
-        window.addEventListener("SHOW_MSG_NEXT", __), 
-        $(".btn-audio").on("click", (function(e) { $(this).hasClass("is-active") ? (Yv.mute(!1), !1) : (Yv.mute(!0), !0) })), 
-        $(".btn-visual-autoplay").on("click", (function(e) {
-            $(this).hasClass("is-active") ? (lr = !0, $("#app").attr("data-status", "autoplaying"), 
-            $("#btnLayerNext, #btnLayerPrev").addClass("disabled"), 
-            window.dispatchEvent(new CustomEvent("SHOWCASE_GO_NEXT"))) : (lr = !1, $("#app").attr("data-status", ""), 
-            $("#btnLayerNext, #btnLayerPrev").removeClass("disabled"), 
-            sr && (clearTimeout(sr), sr = null))
+        }(), qi.set("#app .page", {
+            y: "100%"
+        }), $(".page", a_).attr("data-status", "next"), window.addEventListener("SHOWCASE_LOADING_COMPLETE", c_), window.addEventListener("SHOWCASE_GO_PREV", f_), window.addEventListener("SHOWCASE_GO_NEXT", p_), window.addEventListener("SHOWCASE_GO_PAGE", v_), window.addEventListener("SHOW_MSG_NEXT", __), $(".btn-audio").on("click", (function(e) {
+            $(this).hasClass("is-active") ? (Yv.mute(!1), !1) : (Yv.mute(!0), !0)
+        })), $(".btn-visual-autoplay").on("click", (function(e) {
+            $(this).hasClass("is-active") ? (lr = !0, $("#app").attr("data-status", "autoplaying"), $("#btnLayerNext, #btnLayerPrev").addClass("disabled"), window.dispatchEvent(new CustomEvent("SHOWCASE_GO_NEXT"))) : (lr = !1, $("#app").attr("data-status", ""), $("#btnLayerNext, #btnLayerPrev").removeClass("disabled"), sr && (clearTimeout(sr), sr = null))
         }))
 }]);

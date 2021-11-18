@@ -2,7 +2,7 @@ import {
     getPreviousSiblings, getNextSiblings
 } from "./_utils.js"
 
-function CSSsetProperty(){
+function CSSsetProperty_Fn(){
     const $target = document.querySelector(".visual-block");
     const t = $target.getBoundingClientRect().height //gsap.getProperty(".visual-block", "height")
     const n = .01 * (window.innerWidth, t);
@@ -10,22 +10,26 @@ function CSSsetProperty(){
     document.documentElement.style.setProperty("--fullwidth", `${window.innerWidth*0.01}px`);
     document.documentElement.style.setProperty("--fullvh", `${window.innerHeight*0.01}px`);
 }
+function resize_Fn(){
+    console.log("resize_Fn")
+    setTimeout(()=>{ CSSsetProperty_Fn() }, 100)
+};
 
 window.addEventListener('load', ()=>{
     document.querySelector("#app").classList.add("loaded")
     window.dispatchEvent(new CustomEvent("SHOWCASE_LOADING_COMPLETE"))
 })
 
-
-window.addEventListener('DOMContentLoaded', ()=>{
-    CSSsetProperty();
-    document.addEventListener('resize', ()=>{
-        setTimeout(()=>{ CSSsetProperty() }, 100)
-    });
+window.addEventListener('DOMContentLoaded', ()=>{    
+    resize_Fn();
+    document.addEventListener('resize', ()=> resize_Fn() );
+    
     gsap.set('#app .page', {y: '100%'});
     document.querySelectorAll('.page').forEach((elem)=>{ elem.setAttribute('data-status',"next") });
+    gestureGuide_Fn();
 
-    window.addEventListener("SHOWCASE_LOADING_COMPLETE", coverPageShow_Func) // window.addEventListener("SHOWCASE_LOADING_COMPLETE", c_)
+    window.addEventListener("SHOWCASE_RESIZE", resize_Fn );
+    window.addEventListener("SHOWCASE_LOADING_COMPLETE", coverPageShow_Fn) // window.addEventListener("SHOWCASE_LOADING_COMPLETE", c_)
     // window.addEventListener("SHOWCASE_GO_PREV", f_)
     // window.addEventListener("SHOWCASE_GO_NEXT", p_)
     // window.addEventListener("SHOWCASE_GO_PAGE", v_)
@@ -99,44 +103,64 @@ window.addEventListener('DOMContentLoaded', ()=>{
 
 
 
-var w_ = "#debug" == window.location.hash ? .1 : 5,
-T_ = "#debug" == window.location.hash ? 10 : 400,
-k_ = "#debug" == window.location.hash ? 10 : 2500;
+const logoAnimationTime = "#debug" == window.location.hash ? .1 : 5;
+const gestureGuideOpenDelay = "#debug" == window.location.hash ? 0.01 : 0.4;
+const gestureGuideCloseDelay = "#debug" == window.location.hash ? 0.02 : 3;
 
-// var a_ = $(".app .pages"),
-// s_ = !0,
-// u_ = 1;
+function gestureGuide_Fn() { // x_()
+    gsap.set("#appLoading .logo", { alpha: 1 }); // 브랜드 로고 보이게 설정 //
+    function guidePlay(){
+        window.dispatchEvent(new CustomEvent("SHOWCASE_RESIZE"))
+        document.querySelectorAll("#appLoading .coach-guide").forEach((elem)=>{
+            elem.classList.add("active"); 
+        })
+    }
+    function guideHide(){
+        window.dispatchEvent(new CustomEvent("SHOWCASE_RESIZE"))
+        gsap.to("#appLoading .guide", { autoAlpha: 0, duration: .5 })
+        gsap.to("#appLoading .loading-area", { autoAlpha: 1, duration: .5, onComplete: logoAnimation_Fn })
+    }
+    gsap.delayedCall( gestureGuideOpenDelay, guidePlay);
+    gsap.delayedCall( gestureGuideCloseDelay, guideHide);
+}
 
 
-function S_() { // appLoadComplete_Func() {
+function logoAnimation_Fn(){ // A_()
+    gsap.to("#appLoading .logo", { alpha: 1, duration: logoAnimationTime, onComplete: appLoadComplete_Fn });
+    const tl = gsap.timeline({ repeat: -1 });
+    tl.to("#appLoading .logo svg", { rotateX: -360, duration: 1.5, ease: 'Quart.easeInOut'}, 0)
+    tl.to("#appLoading .logo svg", { rotateY: -360, duration: 1.5, ease: 'Quart.easeInOut'}, .9)
+}
+
+function appLoadComplete_Fn() { // S_(){
     /*
-        로딩 애니메이션 완료 - coverPageShow_Func 실행 
+        로딩 애니메이션 완료
+        - 로딩 애니메이션 지우기
+        - coverPageShow_Func 실행 
     */
     document.querySelector("#app").classList.add("loading-ended") 
-    window.dispatchEvent(new CustomEvent("SHOWCASE_LOADING_COMPLETE"))
+    window.dispatchEvent(new CustomEvent("SHOWCASE_LOADING_COMPLETE"));
     gsap.to("#appLoading", { autoAlpha: 0, duration: .5 })
 }
-//appLoadComplete_Func() 
 
-function coverPageShow_Func() {
+function coverPageShow_Fn() {
     /*
         cover & nextSibling 이미지 대입
     */
-    console.log( "cover play" )
     const $cover = document.querySelector("#app .page#cover");
     gsap.set($cover, { y: 0 })
     $cover.setAttribute("data-status", "active")
-    inputImageData_Func($cover)
+    inputImageData_Fn($cover)
 }
 
-function pageStatusActive_Func( elem ) {
+function pageStatusActive_Fn( elem ) {
     /*
         data-status = "active"
         data-status = "sibling"
         data-status = "prev" || "next"
         현재, 앞, 뒤 이미지 대입 // inputImageData_Func()
     */
-    inputImageData( elem )
+        inputImageData_Fn( elem )
     
     elem.setAttribute("data-status", "active")
     elem.previousElementSibling.setAttribute("data-status", "sibling")
@@ -146,45 +170,48 @@ function pageStatusActive_Func( elem ) {
     getNextSiblings(elem).forEach(( item ) => item.setAttribute("data-status", "next"))
 }
 
-function inputImageData_Func( elem ) {
+function inputImageData_Fn( elem ) {
     /* 
         data-stutus:acvive 와 앞 뒤 페이지 이미지 대입
     */
     elem.querySelectorAll(".back").forEach((item)=>{
-        
-        const src = item.getAttribute("data-bg")
-        console.log(src)
+        const src = item.getAttribute("data-bg");
         if( src && "" != src) item.style.backgroundImage = `url(${src})`
     })
-    // elem.querySelectorAll("img").forEach((item)=>{
-    //     const src = item.dataset.dataSrc;
-    //     if( src && "" != src) item.setAttribute("src", src)
-    // })
-    // if( elem.nextElementSibling ){
-    //     elem.nextElementSibling.querySelectorAll(".back").forEach((item)=>{
-    //         const src = item.dataset.dataBg;
-    //         if( src && "" != src) item.style.backgroundImage = `url(${src})`
-    //     })
-    //     elem.nextElementSibling.querySelectorAll("img").forEach((item)=>{
-    //         const src = item.dataset.dataSrc;
-    //         if( src && "" != src) item.setAttribute("src", src)
-    //     })
-    // }
-    // if( elem.previousElementSibling ){
-    //     elem.previousElementSibling.querySelectorAll(".back").forEach((item)=>{
-    //         const src = item.dataset.dataBg;
-    //         if( src && "" != src) item.style.backgroundImage = `url(${src})`
-    //     })
-    //     elem.previousElementSibling.querySelectorAll("img").forEach((item)=>{
-    //         const src = item.dataset.dataSrc;
-    //         if( src && "" != src) item.setAttribute("src", src)
-    //     })
-    // }
-
+    elem.querySelectorAll("img").forEach((item)=>{
+        const src = item.getAttribute("data-src");
+        if( src && "" != src) item.setAttribute("src", src)
+    })
+    if( elem.nextElementSibling ){
+        elem.nextElementSibling.querySelectorAll(".back").forEach((item)=>{
+            const src = item.getAttribute("data-bg");
+            if( src && "" != src) item.style.backgroundImage = `url(${src})`
+        })
+        elem.nextElementSibling.querySelectorAll("img").forEach((item)=>{
+            const src = item.getAttribute("data-src");
+            if( src && "" != src) item.setAttribute("src", src)
+        })
+    }
+    if( elem.previousElementSibling ){
+        elem.previousElementSibling.querySelectorAll(".back").forEach((item)=>{
+            const src = item.getAttribute("data-bg");
+            if( src && "" != src) item.style.backgroundImage = `url(${src})`
+        })
+        elem.previousElementSibling.querySelectorAll("img").forEach((item)=>{
+            const src = item.getAttribute("data-src");
+            if( src && "" != src) item.setAttribute("src", src)
+        })
+    }
 }
+
 /*
+function i(){
+    console.log(i)
+}
+
 function d_(e) {
-    switch (e.attr("id")) {
+    // switch (e.attr("id")) {
+    switch (e) {
         case "cover":
             return i;
         case "intro1":
@@ -232,10 +259,9 @@ function d_(e) {
         case "ending":
             return c
     }
-}
-*/
+}*/
 
-
+// i,o,a,s,u,l,r,d,c
 
 
 
@@ -261,40 +287,6 @@ function d_(e) {
 //     }
 // }
 
-/* 제스쳐 가이드  */
-function x_() {
-    setTimeout((function() {
-        $("#appLoading .coach-guide").addClass("active"), setTimeout((function() {
-            $(window).trigger("resize"), qi.to("#appLoading .guide", {
-                autoAlpha: 0,
-                duration: .5
-            }), qi.to("#appLoading .loading-area", {
-                autoAlpha: 1,
-                duration: .5,
-                onComplete: A_
-            })
-        }), k_), $(window).trigger("resize")
-    }), T_), qi.set("#appLoading .logo", {
-        alpha: 1
-    })
-}
-
-/* 로딩 애니메이션 */
-
-function A_() {
-    qi.to("#appLoading .logo", {
-        alpha: 1,
-        duration: w_,
-        onComplete: S_
-    });
-    var e = qi.timeline({ repeat: -1 });
-    e.to("#appLoading .logo svg", {
-        rotateX: -360,
-        duration: 1.5,
-        ease: xn.easeInOut
-    }, 0), e.to("#appLoading .logo svg", {
-        rotateY: -360,
-        duration: 1.5,
-        ease: xn.easeInOut
-    }, .9)
-}
+// function gy(e) {
+//     "active" == $(".page#intro1").attr("data-status") && e == cy && (l_(!1), tr(), "active" == $(".page#intro1").attr("data-status") && (rr($(".page#intro1")), cr()))
+// }
