@@ -160,15 +160,16 @@ function appLoadComplete_Fn() { // 로고애니메이션 완료 - 커버 보이�
 }
 
 function firstPageShow_Fn() { // cover show //
-    const _id = 'chapter1_1_detail'
+    const _id = 'intro2';
     const $firstPage = document.querySelector(`#app .page#${_id}`);
     gsap.set($firstPage, { y: 0 })
     $firstPage.setAttribute("data-status", "active")
 
-    page(_id).reset();
+    page(_id).reset(_id);
     pageStatusActive_Fn( $firstPage );
-    page(_id).start();
+    page(_id).start(_id);
     window.dispatchEvent(new CustomEvent("SHOWCASE_RESIZE"));
+
 }
 
 function pageStatusActive_Fn( elem ) { /* data-status 변경 &  inputImageData_Fn */

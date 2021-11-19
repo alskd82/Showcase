@@ -1120,8 +1120,6 @@ product-cover
 
 .page.product-cover .rolling-bg {
   background: 0 0;
-  -webkit-transform: translate(-50%, -50%);
-          transform: translate(-50%, -50%);
 }
 
 .page.product-cover .product-name {
