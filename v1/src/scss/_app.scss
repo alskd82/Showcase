@@ -1,12 +1,4 @@
 
-@font-face {
-    font-family: "Euclid Flex";
-    src: url(fonts/EuclidFlexMedium.eot);
-    src: url(fonts/EuclidFlexMedium.eot?#iefix) format("embedded-opentype"), url(fonts/EuclidFlexMedium.woff2) format("woff2"), url(fonts/EuclidFlexMedium.woff) format("woff"), url(fonts/EuclidFlexMedium.ttf) format("truetype"), url(fonts/EuclidFlexMedium.svg#EuclidFlexMedium) format("svg");
-    font-weight: 500;
-    font-style: normal;
-    font-display: swap
-}
 
 .app {
     font-weight: 500;
@@ -22,11 +14,7 @@
     text-size-adjust: none
 }
 
-.app .font-musinsa { font-family: Musinsa, sans-serif !important; font-weight: 500 !important }
-.app .font-euclidflex {
-    font-family: "Euclid Flex", sans-serif !important;
-    letter-spacing: 0 !important
-}
+
 
 .app h1, .app h2, .app h3, .app h4, .app h5 { font-weight: 500 }
 .app .bold {font-weight: 700 !important }

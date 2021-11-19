@@ -14,7 +14,10 @@ height: auto;
 }
 
 /* CSS Reset by [class] */
-[class] {
+[class],
+.visual-block p,
+.visual-block button
+{
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -28,3 +31,7 @@ height: auto;
 }
 [class]::before,
 [class]::after { box-sizing: border-box; }
+
+/*
+*/
+

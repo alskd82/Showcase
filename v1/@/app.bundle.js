@@ -3121,17 +3121,17 @@
     Vi() && $i.registerPlugin(Xi);
     var Yi = n(1),
         Qi = n.n(Yi),
-        Ki = !0,
+        Ki = true,
         Zi = document.querySelector("#app"),
-        Ji = !1;
+        Ji = false;
 
     function er() {
-        Ki = !0, 
+        Ki = true, 
         $("#btnLayerNext").removeClass("blink")
     }
 
     function tr() {
-        Ki = !1
+        Ki = false
     }
     $("#showCaseInfo ul li a").on("click", (function(e) {
         e.preventDefault();
@@ -3144,8 +3144,10 @@
         ir = $("#btnLayerNext");
 
     function rr(e) {
-        "active" == e.attr("data-status") && (clearTimeout(nr), nr = null, ir.removeClass("blink"), 
-        nr = setTimeout((function() { ir.addClass("blink") }), 10))
+        "active" == e.attr("data-status") && (clearTimeout(nr), 
+        nr = null, 
+        $("#btnLayerNext").removeClass("blink"), 
+        nr = setTimeout((function() { $("#btnLayerNext").addClass("blink") }), 10))
     }
 
     function appProgressBar_play(e) { qi.set("#app .app-progress-bar", { scaleX: e }) }
@@ -3172,7 +3174,8 @@
     function hr(e) {
         qi.set("#cover .back", {
             height: 0
-        }), qi.set("#cover .back.b1", {
+        }), 
+        qi.set("#cover .back.b1", {
             height: "100%"
         }), qi.set("#cover .slogan span", {
             alpha: 0,
@@ -11102,23 +11105,26 @@
             }
         }]), e
     }();
+
+    /* ------- 사운드 ----------------- */
     Hv.defaults = ($v = tv, JSON.parse(JSON.stringify($v)));
     var Uv, Bv, qv, zv, Vv, Wv = Hv,
         Gv = n(0),
         Xv = document.getElementById("bgm"),
         Yv = new Gv.Howl({
             src: [Xv.src],
-            autoplay: !0,
-            loop: !0,
+            autoplay: true,
+            loop: true,
             volume: 1,
             onplay: function() {
-                $(".btn-audio").addClass("is-active"), !1
+                $(".btn-audio").addClass("is-active"), false
             }
         });
 
     function Qv(e) {
         Yv.fade(Yv.volume(), e, 200)
     }
+    /* ---------------------------------- */
 
     function Kv(e) {
         qi.set($(".video-dimmed", e), { y: "100%" ), 
@@ -11161,7 +11167,8 @@
     }
 
     function Jv(e) {
-        Vv = e, zv = $("video", e)[0];
+        Vv = e, 
+        zv = $("video", e)[0];
         var t = $("video", e).hasClass("plyr"),
             n = new Xt({
                 onUpdate: function() {
@@ -11169,9 +11176,9 @@
                 }
             });
         n.to($(".video-dimmed", e), { alpha: 1, y: "0%", easing: An.easeInOut, duration: .6 }, .2), 
-        n.to($(".video", e), { alpha: 1, easing: An.easeOut, duration: 1, o
-            nStart: function() {
-                qv = !0, 
+        n.to($(".video", e), { alpha: 1, easing: An.easeOut, duration: 1, 
+            onStart: function() {
+                qv = true, 
                 t ? (zv.player.rewind(0), zv.player.play()) : zv.play(), 
                 requestAnimationFrame(ny)
                 }
@@ -11203,7 +11210,12 @@
     }
 
     function hy(e) {
-        qi.killTweensOf("#intro1 .back"), qi.killTweensOf("#intro1 .photo"), qi.killTweensOf("#intro1 .title"), qi.killTweensOf("#intro1 .title span"), qi.killTweensOf("#intro1 .descriptions"), qi.killTweensOf("#intro1 .descriptions p")
+        qi.killTweensOf("#intro1 .back"), 
+        qi.killTweensOf("#intro1 .photo"), 
+        qi.killTweensOf("#intro1 .title"), 
+        qi.killTweensOf("#intro1 .title span"), 
+        qi.killTweensOf("#intro1 .descriptions"), 
+        qi.killTweensOf("#intro1 .descriptions p")
     }
 
     function fy(e) {
@@ -11346,7 +11358,9 @@
     }
 
     function My(e) {
-        qi.killTweensOf($(".rolling-bg", e)), qi.killTweensOf($(".back", e)), qi.killTweensOf($(".product-name span", e))
+        qi.killTweensOf($(".rolling-bg", e)), 
+        qi.killTweensOf($(".back", e)), 
+        qi.killTweensOf($(".product-name span", e))
     }
 
     function Ly(e) {
@@ -11435,11 +11449,11 @@
     }
 
     function qy(e) {
-        return !0
+        return true
     }
 
     function zy(e) {
-        return !0
+        return true
     }
 
     function Vy() {
@@ -11447,12 +11461,8 @@
     }
 
     function Wy(e) {
-        qi.set("#ending .bg-over", {
-            alpha: 0
-        }), qi.set("#ending .bg-logo", {
-            alpha: 0,
-            scale: 1.1
-        })
+        qi.set("#ending .bg-over", { alpha: 0 }), 
+        qi.set("#ending .bg-logo", { alpha: 0, scale: 1.1 })
     }
 
     function Gy(e) {
@@ -11554,12 +11564,14 @@
 
     function c_() {
         var e = $("#app .page#cover");
-        qi.set(e, {
-            y: 0
-        }), e.attr("data-status", "active"), requestAnimationFrame((function() {
-            d_(e).reset(e), h_(e)
+        qi.set(e, { y: 0 }), 
+        e.attr("data-status", "active"), 
+        requestAnimationFrame((function() {
+            d_(e).reset(e), 
+            h_(e)
         }))
     }
+
 
     function d_(e) {
         switch (e.attr("id")) {
@@ -11613,8 +11625,9 @@
     }
 
     function h_(e, t) {
-        tr(), 
-        s_ = !1, g_(e), 
+        tr(), // Ki = false
+        s_ = false, 
+        g_(e), // 이미지 대입 함수 
         e.attr("data-status", "active"), 
         e.prev().attr("data-status", "sibling").prevAll().attr("data-status", "prev"), 
         e.next().attr("data-status", "sibling").nextAll().attr("data-status", "next"), 
@@ -11777,7 +11790,7 @@
         }
     }
 
-    function g_(e) {
+    function g_(e) { // 이미지 대입 함수
         $(".back", e).each((function() {
             var e = $(this).attr("data-bg");
             e && "" != e && $(this).css("background-image", "url(".concat(e, ")"))

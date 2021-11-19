@@ -2,6 +2,16 @@ import {
     getPreviousSiblings, getNextSiblings
 } from "./_utils.js"
 
+import { page } from "./_page.js"
+
+import {
+    goToNext_Fn,
+} from "./_controller.js"
+
+
+function appProgressBar_play(_xscale) { gsap.set("#app .app-progress-bar", { scaleX: _xscale }) }
+function appProgressBar_reset() { gsap.set("#app .app-progress-bar", { scaleX: 0 }) }
+
 function CSSsetProperty_Fn(){
     const $target = document.querySelector(".visual-block");
     const t = $target.getBoundingClientRect().height //gsap.getProperty(".visual-block", "height")
@@ -16,22 +26,32 @@ function resize_Fn(){
 };
 
 window.addEventListener('load', ()=>{
-    document.querySelector("#app").classList.add("loaded")
-    window.dispatchEvent(new CustomEvent("SHOWCASE_LOADING_COMPLETE"))
+    document.querySelector("#app").classList.add("loaded");
+
+    document.querySelector("#btnLayerNext").addEventListener("click", (function(e) {
+        // if (Ki || "autoplaying" == $("#app").attr("data-status")) return !1;
+        window.dispatchEvent(new CustomEvent("SHOWCASE_GO_NEXT"))
+    })) 
+    // document.querySelector("#btnLayerPrev").addEventListener("click", (function(e) {
+    //     // if (Ki || "autoplaying" == $("#app").attr("data-status")) return !1;
+    //     // window.dispatchEvent(new CustomEvent("SHOWCASE_GO_PREV"))
+    // }))
+    
 })
 
 window.addEventListener('DOMContentLoaded', ()=>{    
     resize_Fn();
-    document.addEventListener('resize', ()=> resize_Fn() );
+    window.addEventListener('resize', ()=> resize_Fn() );
     
     gsap.set('#app .page', {y: '100%'});
     document.querySelectorAll('.page').forEach((elem)=>{ elem.setAttribute('data-status',"next") });
     gestureGuide_Fn();
 
     window.addEventListener("SHOWCASE_RESIZE", resize_Fn );
-    window.addEventListener("SHOWCASE_LOADING_COMPLETE", coverPageShow_Fn) // window.addEventListener("SHOWCASE_LOADING_COMPLETE", c_)
+    window.addEventListener("SHOWCASE_LOADING_COMPLETE", firstPageShow_Fn);
+
     // window.addEventListener("SHOWCASE_GO_PREV", f_)
-    // window.addEventListener("SHOWCASE_GO_NEXT", p_)
+    window.addEventListener("SHOWCASE_GO_NEXT", goToNext_Fn)
     // window.addEventListener("SHOWCASE_GO_PAGE", v_)
     // window.addEventListener("SHOW_MSG_NEXT", __)
     /*  
@@ -107,7 +127,9 @@ const logoAnimationTime = "#debug" == window.location.hash ? .1 : 5;
 const gestureGuideOpenDelay = "#debug" == window.location.hash ? 0.01 : 0.4;
 const gestureGuideCloseDelay = "#debug" == window.location.hash ? 0.02 : 3;
 
-function gestureGuide_Fn() { // x_()
+
+
+function gestureGuide_Fn() { // 첫 실행 - 제스쳐 가이드 
     gsap.set("#appLoading .logo", { alpha: 1 }); // 브랜드 로고 보이게 설정 //
     function guidePlay(){
         window.dispatchEvent(new CustomEvent("SHOWCASE_RESIZE"))
@@ -124,56 +146,43 @@ function gestureGuide_Fn() { // x_()
     gsap.delayedCall( gestureGuideCloseDelay, guideHide);
 }
 
-
-function logoAnimation_Fn(){ // A_()
+function logoAnimation_Fn(){ // 로고 애니메이션  A_()
     gsap.to("#appLoading .logo", { alpha: 1, duration: logoAnimationTime, onComplete: appLoadComplete_Fn });
     const tl = gsap.timeline({ repeat: -1 });
     tl.to("#appLoading .logo svg", { rotateX: -360, duration: 1.5, ease: 'Quart.easeInOut'}, 0)
     tl.to("#appLoading .logo svg", { rotateY: -360, duration: 1.5, ease: 'Quart.easeInOut'}, .9)
 }
 
-function appLoadComplete_Fn() { // S_(){
-    /*
-        로딩 애니메이션 완료
-        - 로딩 애니메이션 지우기
-        - coverPageShow_Func 실행 
-    */
+function appLoadComplete_Fn() { // 로고애니메이션 완료 - 커버 보이기  S_(){
     document.querySelector("#app").classList.add("loading-ended") 
     window.dispatchEvent(new CustomEvent("SHOWCASE_LOADING_COMPLETE"));
     gsap.to("#appLoading", { autoAlpha: 0, duration: .5 })
 }
 
-function coverPageShow_Fn() {
-    /*
-        cover & nextSibling 이미지 대입
-    */
-    const $cover = document.querySelector("#app .page#cover");
-    gsap.set($cover, { y: 0 })
-    $cover.setAttribute("data-status", "active")
-    inputImageData_Fn($cover)
+function firstPageShow_Fn() { // cover show //
+    const _id = 'chapter1_1_detail'
+    const $firstPage = document.querySelector(`#app .page#${_id}`);
+    gsap.set($firstPage, { y: 0 })
+    $firstPage.setAttribute("data-status", "active")
+
+    page(_id).reset();
+    pageStatusActive_Fn( $firstPage );
+    page(_id).start();
+    window.dispatchEvent(new CustomEvent("SHOWCASE_RESIZE"));
 }
 
-function pageStatusActive_Fn( elem ) {
-    /*
-        data-status = "active"
-        data-status = "sibling"
-        data-status = "prev" || "next"
-        현재, 앞, 뒤 이미지 대입 // inputImageData_Func()
-    */
-        inputImageData_Fn( elem )
+function pageStatusActive_Fn( elem ) { /* data-status 변경 &  inputImageData_Fn */
+    inputImageData_Fn( elem )
     
     elem.setAttribute("data-status", "active")
-    elem.previousElementSibling.setAttribute("data-status", "sibling")
-    elem.nextElementSibling.setAttribute("data-status", "sibling")
+    if(elem.previousElementSibling) elem.previousElementSibling.setAttribute("data-status", "sibling")
+    if(elem.nextElementSibling) elem.nextElementSibling.setAttribute("data-status", "sibling")
 
-    getPreviousSiblings(elem).forEach(( item ) => item.setAttribute("data-status", "prev"))
-    getNextSiblings(elem).forEach(( item ) => item.setAttribute("data-status", "next"))
+    getPreviousSiblings(elem).forEach(( item,i ) => { if(i>0) item.setAttribute("data-status", "prev") })
+    getNextSiblings(elem).forEach(( item,i ) => { if(i>0) item.setAttribute("data-status", "next") })
 }
 
-function inputImageData_Fn( elem ) {
-    /* 
-        data-stutus:acvive 와 앞 뒤 페이지 이미지 대입
-    */
+function inputImageData_Fn( elem ) { /* data-stutus:acvive 와 앞 뒤 페이지 이미지 대입 */
     elem.querySelectorAll(".back").forEach((item)=>{
         const src = item.getAttribute("data-bg");
         if( src && "" != src) item.style.backgroundImage = `url(${src})`
@@ -204,89 +213,4 @@ function inputImageData_Fn( elem ) {
     }
 }
 
-/*
-function i(){
-    console.log(i)
-}
 
-function d_(e) {
-    // switch (e.attr("id")) {
-    switch (e) {
-        case "cover":
-            return i;
-        case "intro1":
-            return o;
-        case "intro2":
-            return a;
-        case "chapter1Cover":
-        case "chapter2Cover":
-            return s;
-        case "chapter1_1":
-        case "chapter1_2":
-        case "chapter1_3":
-        case "chapter1_4":
-        case "chapter1_5":
-            return u;
-        case "chapter1_1_detail":
-        case "chapter1_2_detail":
-        case "chapter1_3_detail":
-        case "chapter1_4_detail":
-        case "chapter1_5_detail":
-            return l;
-        case "chapter2_1":
-        case "chapter2_2":
-        case "chapter2_3":
-        case "chapter2_4":
-        case "chapter2_5":
-        case "chapter2_6":
-        case "chapter2_7":
-        case "chapter2_8":
-            return u;
-        case "chapter2_1_detail":
-        case "chapter2_2_detail":
-        case "chapter2_3_detail":
-        case "chapter2_4_detail":
-        case "chapter2_5_detail":
-        case "chapter2_6_detail":
-        case "chapter2_7_detail":
-        case "chapter2_8_detail":
-            return l;
-        case "filmIntro":
-        case "filmMaking":
-            return r;
-        case "event":
-            return d;
-        case "ending":
-            return c
-    }
-}*/
-
-// i,o,a,s,u,l,r,d,c
-
-
-
-
-
-// function f_() {
-//     if (!s_) {
-//         var e = $('#app .page[data-status="active"]');
-//         if (d_(e).first()) {
-//             var t = e.prev();
-//             t[0] && m_(t, "prev")
-//         }
-//     }
-// }
-
-// function p_() {
-//     if (!s_) {
-//         var e = $('#app .page[data-status="active"]');
-//         if (d_(e).final()) {
-//             var t = e.next();
-//             t[0] && m_(t, "next")
-//         }
-//     }
-// }
-
-// function gy(e) {
-//     "active" == $(".page#intro1").attr("data-status") && e == cy && (l_(!1), tr(), "active" == $(".page#intro1").attr("data-status") && (rr($(".page#intro1")), cr()))
-// }

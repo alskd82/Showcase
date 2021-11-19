@@ -17,7 +17,9 @@ img {
 }
 
 /* CSS Reset by [class] */
-[class] {
+[class],
+.visual-block p,
+.visual-block button {
   margin: 0;
   padding: 0;
   -webkit-box-sizing: border-box;
@@ -44,6 +46,8 @@ img {
           box-sizing: border-box;
 }
 
+/*
+*/
 :root {
   --vh: 1vh;
   --fullwidth: 1vw;
@@ -299,6 +303,634 @@ html, body {
     height: calc(100% - 60px);
     height: calc(100% - 60px - constant(safe-area-inset-bottom));
     height: calc(100% - 60px - env(safe-area-inset-bottom));
+  }
+}
+
+/* hover: 앞뒤점프 버튼 등장 */
+.container .visual-block:hover .controller .btn-layer-control {
+  opacity: 1;
+}
+
+/* 앞뒤버튼 비활성화 */
+#btnLayerNext.disabled, #btnLayerPrev.disabled {
+  opacity: 0.5 !important;
+  -webkit-animation: none !important;
+          animation: none !important;
+}
+
+.controller {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  padding: 0 40px 40px 20px;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  z-index: 2;
+}
+
+.controller > button {
+  width: 48px;
+  height: 48px;
+  float: left;
+  margin-left: 20px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  cursor: pointer;
+}
+
+.controller:after {
+  content: "";
+  display: block;
+  clear: both;
+}
+
+.controller > button i {
+  font-size: 48px;
+  width: 48px;
+  height: 48px;
+}
+
+/* 댓글참여하기 */
+.controller > button.btn-reply {
+  position: relative;
+  float: right;
+  padding-left: 20px;
+  -webkit-box-sizing: content-box;
+          box-sizing: content-box;
+  margin-left: 0;
+}
+
+.controller > button.btn-reply i {
+  position: relative;
+  overflow: visible;
+}
+
+.controller > button.btn-reply .event-label {
+  display: block;
+  position: absolute;
+  left: -18px;
+  top: 0;
+  width: 34px;
+  height: 16px;
+  text-indent: -9999px;
+  background: url(https://static.msscdn.net/mfile_outsrc/showcase/images/event-tool-tip.png) 0 0 no-repeat;
+  background-size: 34px auto;
+}
+
+/* 자동재생버튼
+.is-active 추가시 정지버튼으로 변경
+*/
+.controller > button.btn-visual-autoplay.is-active i:before {
+  content: "";
+}
+
+/* 앞뒤 점프 
+처음엔 opcity: 0
+*/
+.controller > button.btn-layer-control {
+  position: absolute;
+  top: auto;
+  bottom: calc(50vh - 24px);
+  width: 48px;
+  height: 48px;
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 100%;
+  -webkit-transition: opacity 0.1s linear;
+  transition: opacity 0.1s linear;
+  margin-left: 0;
+  opacity: 0;
+}
+
+.controller > button.btn-layer-control i {
+  width: 30px;
+  height: 30px;
+  font-size: 30px;
+}
+
+.controller > button.btn-layer-control#btnLayerPrev {
+  left: 20px;
+}
+
+.controller > button.btn-layer-control#btnLayerNext {
+  right: 20px;
+}
+
+.controller > button.btn-layer-control:after {
+  display: none;
+}
+
+/* 오디오 
+.is-active 추가시 애니메이션
+*/
+.controller .btn-audio {
+  overflow: hidden;
+  text-align: center;
+}
+
+.controller .btn-audio .audio-ani-wrap {
+  position: relative;
+  display: inline-block;
+  width: 26px;
+  height: 30px;
+}
+
+.controller .btn-audio.is-active span {
+  -webkit-animation: sound 1s cubic-bezier(0.47, 0, 0.75, 0.72) infinite alternate;
+          animation: sound 1s cubic-bezier(0.47, 0, 0.75, 0.72) infinite alternate;
+}
+
+.controller .btn-audio span {
+  position: absolute;
+  bottom: 0px;
+  width: 2px;
+  height: 6px;
+  background-color: #fff;
+}
+
+.controller .btn-audio span:nth-child(1) {
+  left: 0;
+  -webkit-animation-delay: 0.2s;
+          animation-delay: 0.2s;
+}
+
+.controller .btn-audio span:nth-child(2) {
+  left: 8px;
+  -webkit-animation-delay: 0.4s;
+          animation-delay: 0.4s;
+}
+
+.controller .btn-audio span:nth-child(3) {
+  left: 16px;
+  -webkit-animation-delay: 0.6s;
+          animation-delay: 0.6s;
+}
+
+.controller .btn-audio span:nth-child(4) {
+  left: 24px;
+  -webkit-animation-delay: 0.8s;
+          animation-delay: 0.8s;
+}
+
+/* 기획전바로가기 옷 모양 아이콘 */
+.controller .btn-product-view {
+  display: none;
+}
+
+.controller .btn-product-view i {
+  -webkit-transform: translateY(-10px);
+          transform: translateY(-10px);
+}
+
+/* --------------------------------------------------------------------------------------------------  */
+/* @media */
+/* --------------------------------------------------------------------------------------------------- */
+/* /////////////////////////////////////////////////////////////////////////////////////////////////// */
+/* ======[ width 1024px - 1280px]===================================================================== */
+/* /////////////////////////////////////////////////////////////////////////////////////////////////// */
+@media screen and (min-width: 1024px) and (max-width: 1280px) {
+  .controller {
+    padding: 0 30px 30px 10px;
+  }
+  .controller > button {
+    width: 30px;
+    height: 30px;
+  }
+  .controller > button > i {
+    width: 30px;
+    height: 30px;
+    font-size: 30px;
+  }
+  .controller > button.btn-reply .event-label {
+    left: -21px;
+    top: -6px;
+  }
+  .controller > button.btn-layer-control {
+    bottom: calc(50vh - 15px);
+    top: auto;
+    width: 30px;
+    height: 30px;
+  }
+  .controller > button.btn-layer-control#btnLayerPrev {
+    left: 16px;
+  }
+  .controller > button.btn-layer-control#btnLayerNext {
+    right: 16px;
+  }
+  .controller > button.btn-layer-control i {
+    font-size: 20px;
+    line-height: 30px;
+  }
+  .controller .btn-audio .audio-ani-wrap {
+    width: 22px;
+    height: 21px;
+  }
+  .controller .btn-audio.is-active span {
+    -webkit-animation-name: m-sound;
+            animation-name: m-sound;
+  }
+  .controller .btn-audio span {
+    width: 1px;
+    height: 6px;
+  }
+  .controller .btn-audio span:nth-child(1) {
+    left: 0;
+  }
+  .controller .btn-audio span:nth-child(2) {
+    left: 5px;
+  }
+  .controller .btn-audio span:nth-child(3) {
+    left: 10px;
+  }
+  .controller .btn-audio span:nth-child(4) {
+    left: 15px;
+  }
+}
+
+/* /////////////////////////////////////////////////////////////////////////////////////////////////// */
+/* ======[ width 1023px 이하]===================================================================== */
+/* /////////////////////////////////////////////////////////////////////////////////////////////////// */
+@media screen and (max-width: 1023px) {
+  .controller {
+    height: 60px;
+    background-color: #fff;
+    padding-left: 0;
+    padding-right: 0;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+            justify-content: space-between;
+    -webkit-box-sizing: initial;
+            box-sizing: initial;
+    padding-bottom: constant(safe-area-inset-bottom);
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+  .controller:after {
+    display: none;
+  }
+  .controller > button {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -webkit-box-flex: 1;
+        -ms-flex: 1;
+            flex: 1;
+    margin-left: 0;
+    width: auto !important;
+    height: 60px !important;
+    line-height: 60px;
+    text-align: center;
+  }
+  .controller > button i {
+    font-size: 30px !important;
+    width: 30px;
+    height: 30px;
+    color: #000;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+  }
+  /* 댓글참여하기  */
+  .controller > button.btn-reply {
+    float: none;
+    margin-left: 0;
+    padding-left: 0;
+  }
+  .controller > button.btn-reply .event-label {
+    left: -25px;
+    top: -5px;
+  }
+  .controller > button.btn-layer-control {
+    position: static;
+    border-radius: 0;
+    background-color: rgba(0, 0, 0, 0);
+    opacity: 1;
+    top: 0;
+    margin-top: 0;
+  }
+  .controller > button.btn-layer-control:after {
+    display: none;
+  }
+  .controller > button.btn-layer-control#btnLayerPrev .ic-30-bold-line-arrow-left:before {
+    content: "";
+  }
+  .controller > button.btn-layer-control#btnLayerNext .ic-30-bold-line-arrow-right:before {
+    content: "";
+  }
+  .controller .btn-audio.is-active span {
+    -webkit-animation: m-sound 1s cubic-bezier(0.47, 0, 0.75, 0.72) infinite alternate;
+            animation: m-sound 1s cubic-bezier(0.47, 0, 0.75, 0.72) infinite alternate;
+  }
+  .controller .btn-audio .audio-ani-wrap {
+    position: relative;
+    width: 15px;
+    height: 22px;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+  }
+  .controller .btn-audio .audio-ani-wrap span {
+    position: absolute;
+    bottom: 0;
+    width: 1.2px;
+    height: 4px;
+    background-color: #000;
+  }
+  .controller .btn-audio .audio-ani-wrap span:nth-child(1) {
+    left: 0;
+    -webkit-animation-delay: 0.2s;
+            animation-delay: 0.2s;
+  }
+  .controller .btn-audio .audio-ani-wrap span:nth-child(2) {
+    left: 4px;
+    -webkit-animation-delay: 0.4s;
+            animation-delay: 0.4s;
+  }
+  .controller .btn-audio .audio-ani-wrap span:nth-child(3) {
+    left: 8px;
+    -webkit-animation-delay: 0.6s;
+            animation-delay: 0.6s;
+  }
+  .controller .btn-audio .audio-ani-wrap span:nth-child(4) {
+    left: 12px;
+    -webkit-animation-delay: 0.8s;
+            animation-delay: 0.8s;
+  }
+  /* 기획전바로가기 옷 모양 아이콘 */
+  .controller .btn-product-view {
+    display: -webkit-box !important;
+    display: -ms-flexbox !important;
+    display: flex !important;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    position: absolute;
+    right: 15px;
+    top: -60px;
+    width: 40px !important;
+    height: 40px !important;
+    background-color: rgba(0, 0, 0, 0.3);
+    border-radius: 40px;
+    z-index: 1;
+  }
+  .controller .btn-product-view i {
+    color: #fff;
+  }
+  .controller .btn-product-view i {
+    -webkit-transform: translateY(0);
+            transform: translateY(0);
+  }
+}
+
+/* /////////////////////////////////////////////////////////////////////////////////////////////////// */
+/* ======[ -pixel-ratio: 1.5  orientation: portrait ]===================== For iPadPro - 1024 */
+/* /////////////////////////////////////////////////////////////////////////////////////////////////// */
+@media only screen and (-webkit-min-device-pixel-ratio: 1.5) and (orientation: portrait) {
+  .controller {
+    height: 60px;
+    background-color: #fff;
+    padding-left: 0;
+    padding-right: 0;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+            justify-content: space-between;
+    -webkit-box-sizing: initial;
+            box-sizing: initial;
+    padding-bottom: constant(safe-area-inset-bottom);
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+  .controller:after {
+    display: none;
+  }
+  .controller > button {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -webkit-box-flex: 1;
+        -ms-flex: 1;
+            flex: 1;
+    margin-left: 0;
+    width: auto !important;
+    height: 60px !important;
+    line-height: 60px;
+    text-align: center;
+  }
+  .controller > button i {
+    font-size: 30px !important;
+    width: 30px;
+    height: 30px;
+    color: #000;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+  }
+  /* 댓글참여하기  */
+  .controller > button.btn-reply {
+    float: none;
+    margin-left: 0;
+    padding-left: 0;
+  }
+  .controller > button.btn-reply .event-label {
+    left: -25px;
+    top: -5px;
+  }
+  .controller > button.btn-layer-control {
+    position: static;
+    border-radius: 0;
+    background-color: rgba(0, 0, 0, 0);
+    opacity: 1;
+    top: 0;
+    margin-top: 0;
+  }
+  .controller > button.btn-layer-control:after {
+    display: none;
+  }
+  .controller > button.btn-layer-control#btnLayerPrev .ic-30-bold-line-arrow-left:before {
+    content: "";
+  }
+  .controller > button.btn-layer-control#btnLayerNext .ic-30-bold-line-arrow-right:before {
+    content: "";
+  }
+  .controller .btn-audio.is-active span {
+    -webkit-animation: m-sound 1s cubic-bezier(0.47, 0, 0.75, 0.72) infinite alternate;
+            animation: m-sound 1s cubic-bezier(0.47, 0, 0.75, 0.72) infinite alternate;
+  }
+  .controller .btn-audio .audio-ani-wrap {
+    position: relative;
+    width: 15px;
+    height: 22px;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+  }
+  .controller .btn-audio .audio-ani-wrap span {
+    position: absolute;
+    bottom: 0;
+    width: 1.2px;
+    height: 4px;
+    background-color: #000;
+  }
+  .controller .btn-audio .audio-ani-wrap span:nth-child(1) {
+    left: 0;
+    -webkit-animation-delay: 0.2s;
+            animation-delay: 0.2s;
+  }
+  .controller .btn-audio .audio-ani-wrap span:nth-child(2) {
+    left: 4px;
+    -webkit-animation-delay: 0.4s;
+            animation-delay: 0.4s;
+  }
+  .controller .btn-audio .audio-ani-wrap span:nth-child(3) {
+    left: 8px;
+    -webkit-animation-delay: 0.6s;
+            animation-delay: 0.6s;
+  }
+  .controller .btn-audio .audio-ani-wrap span:nth-child(4) {
+    left: 12px;
+    -webkit-animation-delay: 0.8s;
+            animation-delay: 0.8s;
+  }
+  /* 기획전바로가기 옷 모양 아이콘 */
+  .controller .btn-product-view {
+    display: -webkit-box !important;
+    display: -ms-flexbox !important;
+    display: flex !important;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    position: absolute;
+    right: 15px;
+    top: -60px;
+    width: 40px !important;
+    height: 40px !important;
+    background-color: rgba(0, 0, 0, 0.3);
+    border-radius: 40px;
+    z-index: 1;
+  }
+  .controller .btn-product-view i {
+    color: #fff;
+  }
+  .controller .btn-product-view i {
+    -webkit-transform: translateY(0);
+            transform: translateY(0);
+  }
+}
+
+/* 앞뒤버튼 애니메이션 :: Mobile  */
+@media screen and (max-width: 1023px) {
+  .controller > button.btn-layer-control#btnLayerNext.blink {
+    position: relative;
+  }
+  .controller > button.btn-layer-control#btnLayerNext.blink i {
+    opacity: 1;
+    z-index: 2;
+    position: relative;
+    color: #000;
+    -webkit-animation: blink-to-next-i 4.25s infinite linear;
+            animation: blink-to-next-i 4.25s infinite linear;
+  }
+  .controller > button.btn-layer-control#btnLayerNext.blink:before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    z-index: 1;
+    opacity: 1;
+    background: #0078ff;
+    -webkit-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
+    -webkit-animation: blink-to-next-c 4.25s infinite linear;
+            animation: blink-to-next-c 4.25s infinite linear;
+  }
+}
+
+/* 앞뒤버튼 애니메이션 :: for iPadPro  */
+@media only screen and (-webkit-min-device-pixel-ratio: 1.5) and (orientation: portrait) {
+  #btnLayerNext.disabled, #btnLayerPrev.disabled {
+    display: block;
+  }
+  .controller > button.btn-layer-control#btnLayerNext.blink {
+    position: relative;
+  }
+  .controller > button.btn-layer-control#btnLayerNext.blink i {
+    opacity: 1;
+    z-index: 2;
+    position: relative;
+    color: #000;
+    -webkit-animation: blink-to-next-i 4.25s infinite linear;
+            animation: blink-to-next-i 4.25s infinite linear;
+  }
+  .controller > button.btn-layer-control#btnLayerNext.blink:before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    z-index: 1;
+    opacity: 1;
+    background: #0078ff;
+    -webkit-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
+    -webkit-animation: blink-to-next-c 4.25s infinite linear;
+            animation: blink-to-next-c 4.25s infinite linear;
+  }
+}
+
+/* 앞뒤버튼 애니메이션 ::   PC  */
+@media screen and (min-width: 1024px) {
+  #btnLayerNext.disabled, #btnLayerPrev.disabled {
+    display: none;
+  }
+  .controller > button.btn-layer-control#btnLayerNext.blink {
+    -webkit-animation: blink-to-next 4.25s infinite linear;
+            animation: blink-to-next 4.25s infinite linear;
   }
 }
 /*# sourceMappingURL=common.css.map */
