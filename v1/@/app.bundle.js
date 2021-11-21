@@ -1194,15 +1194,20 @@
         return zy
     }));
     var c = {};
-    n.r(c), n.d(c, "reset", (function() {
+    n.r(c), 
+    n.d(c, "reset", (function() {
         return Wy
-    })), n.d(c, "stop", (function() {
+    })), 
+    n.d(c, "stop", (function() {
         return Gy
-    })), n.d(c, "start", (function() {
+    })), 
+    n.d(c, "start", (function() {
         return Xy
-    })), n.d(c, "first", (function() {
+    })), 
+    n.d(c, "first", (function() {
         return Yy
-    })), n.d(c, "final", (function() {
+    })), 
+    n.d(c, "final", (function() {
         return Qy
     }));
     var d = {};
@@ -11635,7 +11640,7 @@
         $(window).trigger("resize")
     }
 
-    function f_() {
+    function f_() { // 뒤로
         if (!s_) {
             var e = $('#app .page[data-status="active"]');
             if (d_(e).first()) {
@@ -11645,7 +11650,7 @@
         }
     }
 
-    function p_() {
+    function p_() { // 앞으로 
         if (!s_) {
             var e = $('#app .page[data-status="active"]');
             if (d_(e).final()) {
@@ -11667,7 +11672,7 @@
             $("#app").attr("data-dir", t), 
             d_(e).stop(e, n), 
             d_(e).reset(e, n), 
-            g_(e), 
+            g_(e), // 이미지 대입 함수
             qi.globalTimeline.clear(), 
             setTimeout((function() {
                 var r;
@@ -11687,7 +11692,8 @@
                     }); 
                 "fade" == (r = r || "vertical") ? function(e, t, n, i) {
                     "next" == t ? (
-                        qi.set(n, { zIndex: 4 }), qi.set(i, { zIndex: 5 }), 
+                        qi.set(n, { zIndex: 4 }), 
+                        qi.set(i, { zIndex: 5 }), 
                         e.fromTo(n, { y: 0, x: 0 }, { y: 0, x: 0, duration: .5 * u_, ease: kn.easeOut }, 0), 
                         e.fromTo(i, { y: 0, x: 0, alpha: 0 }, { y: 0, x: 0, alpha: 1, duration: .5 * u_, ease: kn.easeOut }, 0), 
                         e.fromTo($(".page-inner", n), { y: 0, x: 0 }, { y: 0, x: 0, duration: .5 * u_, ease: kn.easeOut }, 0), 
@@ -11828,7 +11834,10 @@
     var y_ = null;
 
     function __(e) {
-        clearTimeout(y_), y_ = null, $(".msg-next").removeClass("active"), y_ = setTimeout((function() {
+        clearTimeout(y_), 
+        y_ = null, 
+        $(".msg-next").removeClass("active"), 
+        y_ = setTimeout((function() {
             $(".msg-next").addClass("active")
         }), 100)
     }

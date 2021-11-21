@@ -1,6 +1,6 @@
 function getPreviousSiblings(elem, filter) {
     let sibs = [];
-    while (elem = elem.previousSibling) {
+    while (elem = elem.previousElementSibling) { //  previousSibling
         if (elem.nodeType === 3) continue; // ignore text nodes
         if (!filter || filter(elem)) sibs.push(elem);
     }
@@ -8,7 +8,7 @@ function getPreviousSiblings(elem, filter) {
 }
 function getNextSiblings(elem, filter) {
     let sibs = [];
-    var nextElem = elem.parentNode.firstChild;
+    var nextElem = elem.parentNode.firstChild; // elem.nextElementSibling; elem.parentNode.firstChild;
     do {
         if (nextElem.nodeType === 3) continue; // ignore text nodes
         if (nextElem === elem) continue; // ignore elem of target
@@ -18,10 +18,15 @@ function getNextSiblings(elem, filter) {
                 elem = nextElem;
             }
         }
-    } while(nextElem = nextElem.nextSibling)
+    } while(nextElem = nextElem.nextSibling  ) // nextElem.nextElementSibling
     return sibs;
 }
 
+function getElementIndex( selector ) {
+    const ele = document.querySelector( selector )
+    return [].indexOf.call(ele.parentNode.children, ele);
+}
+
 export {
-    getPreviousSiblings, getNextSiblings
+    getPreviousSiblings, getNextSiblings, getElementIndex
 };

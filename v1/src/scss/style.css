@@ -1244,4 +1244,107 @@ product-detail
     height: calc(var(--vh, 1vh) * .3149606299);
   }
 }
+
+/*
+event
+===============================================================================================================================
+*/
+#event .event {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+}
+
+#event .event a {
+  display: block;
+  position: relative;
+}
+
+#event .event a img {
+  display: block;
+  width: 48.031496063vh;
+}
+
+#event .event a .txt {
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  -webkit-animation: neon 4s infinite linear;
+          animation: neon 4s infinite linear;
+}
+
+#event .event a .btn {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+#event .indices {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  margin-top: calc(var(--vh, 1vh) * 37.0078740157);
+}
+
+@media screen and (max-width: 1023px) {
+  #event .event a img {
+    width: calc(var(--vh, 1vh) * 48.031496063);
+  }
+  #event .event a .txt {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+  #event .event a .btn {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+  #event .indices {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
+    margin-top: calc(var(--vh, 1vh) * 37.0078740157);
+  }
+}
+
+@-webkit-keyframes neon {
+  0%, 8%, 12%, 22%, 28%, 42%, 48%, 58%, 63%, 70%, 75%, 80% {
+    opacity: 0;
+  }
+  10%, 25%, 45%, 60% {
+    opacity: .5;
+    -webkit-filter: blur(0.5vh);
+            filter: blur(0.5vh);
+  }
+  72%, 82%, 100% {
+    opacity: 1;
+    -webkit-filter: blur(0.2vh);
+            filter: blur(0.2vh);
+  }
+}
+
+@keyframes neon {
+  0%, 8%, 12%, 22%, 28%, 42%, 48%, 58%, 63%, 70%, 75%, 80% {
+    opacity: 0;
+  }
+  10%, 25%, 45%, 60% {
+    opacity: .5;
+    -webkit-filter: blur(0.5vh);
+            filter: blur(0.5vh);
+  }
+  72%, 82%, 100% {
+    opacity: 1;
+    -webkit-filter: blur(0.2vh);
+            filter: blur(0.2vh);
+  }
+}
 /*# sourceMappingURL=style.css.map */

@@ -331,3 +331,63 @@ product-detail
     .page.product-detail .indices { margin-top: calc(var(--vh, 1vh) * 2.3622047244); }
     .page.product-detail .indices .index { width: calc(var(--vh, 1vh) * 4.7244094488); height: calc(var(--vh, 1vh) * .3149606299); }
 }
+
+
+/*
+event
+===============================================================================================================================
+*/
+#event .event { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); }
+#event .event a { display: block; position: relative; }
+#event .event a img { display: block; width: 48.031496063vh; }
+
+#event .event a .txt {
+    display: block; position: absolute; top: 0; left: 0;
+    animation: neon 4s infinite linear
+}
+
+#event .event a .btn { position: absolute; top: 0; left: 0; }
+#event .indices {
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+    margin-top: calc(var(--vh, 1vh) * 37.0078740157)
+}
+
+
+@media screen and (max-width:1023px) {
+    #event .event a img { width: calc(var(--vh, 1vh) * 48.031496063); }
+    #event .event a .txt {
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+        // animation: neon 4s infinite linear
+    }
+
+    #event .event a .btn {
+        position: absolute;
+        top: 0;
+        left: 0
+    }
+
+    #event .indices {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        margin-top: calc(var(--vh, 1vh) * 37.0078740157)
+    }
+}
+
+@keyframes neon {
+    0%, 8%, 12%, 22%, 28%, 42%, 48%, 58%, 63%, 70%, 75%, 80% { 
+        opacity: 0; 
+    }
+    10%, 25%, 45%, 60% {
+        opacity: .5;
+        filter: blur(.5vh)
+    }
+    72%, 82%, 100% {
+        opacity: 1;
+        filter: blur(.2vh)
+    }
+}

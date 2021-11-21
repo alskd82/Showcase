@@ -1,11 +1,10 @@
-import {
-    getPreviousSiblings, getNextSiblings
-} from "./_utils.js"
-
-import { page } from "./_page.js"
+import { getPreviousSiblings, getNextSiblings, getElementIndex } from "./_utils.js";
+import { page } from "./_page.js";
 
 import {
-    goToNext_Fn,
+    goToNext_Fn, goToPrev_Fn,
+    pageStatusActive_Fn,
+    inputImageData_Fn
 } from "./_controller.js"
 
 
@@ -22,16 +21,17 @@ function CSSsetProperty_Fn(){
 }
 function resize_Fn(){
     console.log("resize_Fn")
-    setTimeout(()=>{ CSSsetProperty_Fn() }, 100)
+    CSSsetProperty_Fn();
+    // setTimeout(()=>{ CSSsetProperty_Fn() }, 100)
 };
 
 window.addEventListener('load', ()=>{
     document.querySelector("#app").classList.add("loaded");
 
-    document.querySelector("#btnLayerNext").addEventListener("click", (function(e) {
-        // if (Ki || "autoplaying" == $("#app").attr("data-status")) return !1;
-        window.dispatchEvent(new CustomEvent("SHOWCASE_GO_NEXT"))
-    })) 
+    // document.querySelector("#btnLayerNext").addEventListener("click", (function(e) {
+    //     // if (Ki || "autoplaying" == $("#app").attr("data-status")) return !1;
+    //     window.dispatchEvent(new CustomEvent("SHOWCASE_GO_NEXT"))
+    // })) 
     // document.querySelector("#btnLayerPrev").addEventListener("click", (function(e) {
     //     // if (Ki || "autoplaying" == $("#app").attr("data-status")) return !1;
     //     // window.dispatchEvent(new CustomEvent("SHOWCASE_GO_PREV"))
@@ -39,7 +39,7 @@ window.addEventListener('load', ()=>{
     
 })
 
-window.addEventListener('DOMContentLoaded', ()=>{    
+window.addEventListener('DOMContentLoaded', ()=>{  
     resize_Fn();
     window.addEventListener('resize', ()=> resize_Fn() );
     
@@ -50,10 +50,27 @@ window.addEventListener('DOMContentLoaded', ()=>{
     window.addEventListener("SHOWCASE_RESIZE", resize_Fn );
     window.addEventListener("SHOWCASE_LOADING_COMPLETE", firstPageShow_Fn);
 
-    // window.addEventListener("SHOWCASE_GO_PREV", f_)
+    window.addEventListener("SHOWCASE_GO_PREV", goToPrev_Fn)
     window.addEventListener("SHOWCASE_GO_NEXT", goToNext_Fn)
     // window.addEventListener("SHOWCASE_GO_PAGE", v_)
     // window.addEventListener("SHOW_MSG_NEXT", __)
+
+    document.querySelector("#btnLayerNext").addEventListener("click", e => {
+        window.dispatchEvent(new CustomEvent("SHOWCASE_GO_NEXT"))
+    }) 
+    document.querySelector("#btnLayerPrev").addEventListener("click", e => {
+        window.dispatchEvent(new CustomEvent("SHOWCASE_GO_PREV"))
+    })
+
+    // document.getElementById("btnLayerNext").addEventListener("click", (function(e) {
+    //     console.log()
+    //     // window.dispatchEvent(new CustomEvent("SHOWCASE_GO_NEXT"))
+    // }))
+    // document.getElementById("btnLayerPrev").addEventListener("click", (function(e) {
+
+    //     // window.dispatchEvent(new CustomEvent("SHOWCASE_GO_PREV"))
+    // }))
+
     /*  
         마우스 휠 이벤트 등록
         Zi.addEventListener("mousewheel", (function(e) {
@@ -160,7 +177,7 @@ function appLoadComplete_Fn() { // 로고애니메이션 완료 - 커버 보이�
 }
 
 function firstPageShow_Fn() { // cover show //
-    const _id = 'intro2';
+    const _id = 'cover';
     const $firstPage = document.querySelector(`#app .page#${_id}`);
     gsap.set($firstPage, { y: 0 })
     $firstPage.setAttribute("data-status", "active")
@@ -172,46 +189,5 @@ function firstPageShow_Fn() { // cover show //
 
 }
 
-function pageStatusActive_Fn( elem ) { /* data-status 변경 &  inputImageData_Fn */
-    inputImageData_Fn( elem )
-    
-    elem.setAttribute("data-status", "active")
-    if(elem.previousElementSibling) elem.previousElementSibling.setAttribute("data-status", "sibling")
-    if(elem.nextElementSibling) elem.nextElementSibling.setAttribute("data-status", "sibling")
-
-    getPreviousSiblings(elem).forEach(( item,i ) => { if(i>0) item.setAttribute("data-status", "prev") })
-    getNextSiblings(elem).forEach(( item,i ) => { if(i>0) item.setAttribute("data-status", "next") })
-}
-
-function inputImageData_Fn( elem ) { /* data-stutus:acvive 와 앞 뒤 페이지 이미지 대입 */
-    elem.querySelectorAll(".back").forEach((item)=>{
-        const src = item.getAttribute("data-bg");
-        if( src && "" != src) item.style.backgroundImage = `url(${src})`
-    })
-    elem.querySelectorAll("img").forEach((item)=>{
-        const src = item.getAttribute("data-src");
-        if( src && "" != src) item.setAttribute("src", src)
-    })
-    if( elem.nextElementSibling ){
-        elem.nextElementSibling.querySelectorAll(".back").forEach((item)=>{
-            const src = item.getAttribute("data-bg");
-            if( src && "" != src) item.style.backgroundImage = `url(${src})`
-        })
-        elem.nextElementSibling.querySelectorAll("img").forEach((item)=>{
-            const src = item.getAttribute("data-src");
-            if( src && "" != src) item.setAttribute("src", src)
-        })
-    }
-    if( elem.previousElementSibling ){
-        elem.previousElementSibling.querySelectorAll(".back").forEach((item)=>{
-            const src = item.getAttribute("data-bg");
-            if( src && "" != src) item.style.backgroundImage = `url(${src})`
-        })
-        elem.previousElementSibling.querySelectorAll("img").forEach((item)=>{
-            const src = item.getAttribute("data-src");
-            if( src && "" != src) item.setAttribute("src", src)
-        })
-    }
-}
 
 
