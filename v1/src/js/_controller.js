@@ -1,14 +1,14 @@
 import { page } from "./_page.js";
 import { getPreviousSiblings, getNextSiblings, getElementIndex } from "./_utils.js";
 
-
 const activeElem =()=> document.querySelector('#app .page[data-status="active"]')
+let isPageChanging = false
 
 function appProgressBar_play(e) { gsap.set("#app .app-progress-bar", { scaleX: e }) }
 function appProgressBar_reset() { gsap.set("#app .app-progress-bar", { scaleX: 0 }) }
 
 function goToNext_Fn(){
-    // console.log( page("intro1").stepNum )
+    
     if(activeElem().id === "intro1" && page("intro1").stepNum === 1){
         page("intro1").stepNum = 2;
         page("intro1").start() 
@@ -19,15 +19,15 @@ function goToNext_Fn(){
     }
     else {
         if(activeElem().nextElementSibling){
+            isPageChanging = true;  
             goToPage("next")
         }
     }
-    
-    
 }
 
 function goToPrev_Fn(){
     if(activeElem().previousElementSibling){
+        isPageChanging = true;  
         goToPage("prev")
     }
 }
@@ -73,7 +73,7 @@ function goToPage(dir){
 function pageT_Vertical(nowElem, nextElem, dir, pageTime, pageEasing){
     const pageMoveType = (dir === "next") ? nextElem.getAttribute("data-move-type") : nowElem.getAttribute("data-move-type");
 
-    const tl = gsap.timeline({ onComplete: ()=>{ page(nextElem.id).start(nextElem.id) }});
+    const tl = gsap.timeline({ onComplete: ()=>{ page(nextElem.id).start(nextElem.id); isPageChanging = false; }});
     if(dir === "next"){
         tl.fromTo(nowElem, { x: 0, y: 0 }, { x: 0, y: "-100%" , duration: pageTime, ease: pageEasing}, 0); 
         tl.fromTo(nextElem, { x: 0, y: "100%" }, { x: 0, y: 0 , duration: pageTime , ease: pageEasing}, 0);
@@ -114,7 +114,7 @@ function pageT_Vertical(nowElem, nextElem, dir, pageTime, pageEasing){
 function pageT_Horizontal(nowElem, nextElem, dir, pageTime, pageEasing){
     const pageMoveType = (dir === "next") ? nextElem.getAttribute("data-move-type") : nowElem.getAttribute("data-move-type");
 
-    const tl = gsap.timeline({ onComplete: ()=>{ page(nextElem.id).start(nextElem.id) }});
+    const tl = gsap.timeline({ onComplete: ()=>{ page(nextElem.id).start(nextElem.id); isPageChanging = false; }});
     if(dir === "next"){
         const nowTarget = (pageMoveType.indexOf("reverse") != -1) ? "100%" : "-100%";
         const nextStart = (pageMoveType.indexOf("reverse") != -1) ? "-100%" : "100%";
@@ -161,7 +161,7 @@ function pageT_Horizontal(nowElem, nextElem, dir, pageTime, pageEasing){
 ====== 페이지 트랜지션 - data-move-dir="curtain"  ===============================================
 */
 function pageT_Curtain(nowElem, nextElem, dir, pageTime, pageEasing){
-    const tl = gsap.timeline({ onComplete: ()=>{ page(nextElem.id).start(nextElem.id) }});
+    const tl = gsap.timeline({ onComplete: ()=>{ page(nextElem.id).start(nextElem.id); isPageChanging = false; }});
     if(dir === "next"){
         tl.fromTo(nowElem.querySelector(".page-inner"), { y: 0, x: 0 }, { y: "100%", x: "0%", duration: pageTime, ease: pageEasing}, 0) 
         tl.fromTo(nowElem.querySelector(".curtain > *"), { scaleX: 0 }, { scaleX: 1, duration: pageTime, ease: pageEasing }, .75 * pageTime) 
@@ -185,7 +185,7 @@ function pageT_Curtain(nowElem, nextElem, dir, pageTime, pageEasing){
 */
 function pageT_Fade(nowElem, nextElem, dir, pageTime, pageEasing){
 
-    const tl = gsap.timeline({ onComplete: ()=>{ page(nextElem.id).start(nextElem.id) }});
+    const tl = gsap.timeline({ onComplete: ()=>{ page(nextElem.id).start(nextElem.id); isPageChanging = false; }});
     if(dir === "next"){
         tl.fromTo(nowElem, { y: 0, x: 0 }, { y: 0, x: 0, duration: .5 * pageTime, ease: Quart.easeOut }, 0) 
         tl.fromTo(nextElem, { y: 0, x: 0, alpha: 0 }, { y: 0, x: 0, alpha: 1, duration: .5 * pageTime, ease: Quart.easeOut }, 0) 
@@ -254,5 +254,6 @@ export {
     activeElem,
     goToNext_Fn, goToPrev_Fn,
     pageStatusActive_Fn,
-    inputImageData_Fn
+    inputImageData_Fn,
+    isPageChanging
 }

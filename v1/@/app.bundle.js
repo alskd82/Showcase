@@ -11912,15 +11912,15 @@
                 var t = e.detail.directions;
                 t.left || t.top ? window.dispatchEvent(new CustomEvent("SHOWCASE_GO_NEXT")) : (t.right || t.bottom) && window.dispatchEvent(new CustomEvent("SHOWCASE_GO_PREV"))
             })), 
-            document.getElementById("btnLayerNext").addEventListener("click", (function(e) {
+            document.getElementById("btnLayerNext").addEventListener("click", (function(e) { // v
                 if (Ki || "autoplaying" == $("#app").attr("data-status")) return !1;
                 window.dispatchEvent(new CustomEvent("SHOWCASE_GO_NEXT"))
             })), 
-            document.getElementById("btnLayerPrev").addEventListener("click", (function(e) {
+            document.getElementById("btnLayerPrev").addEventListener("click", (function(e) { // v
                 if (Ki || "autoplaying" == $("#app").attr("data-status")) return !1;
                 window.dispatchEvent(new CustomEvent("SHOWCASE_GO_PREV"))
             })), 
-            $(window).on("resize", (function() {
+            $(window).on("resize", (function() { // v
                 requestAnimationFrame(e), 
                 setTimeout((function() { e() }), 100)
             })), 
@@ -11938,11 +11938,11 @@
                 37 != e.keyCode && 38 != e.keyCode || (Ki = !0, window.dispatchEvent(new CustomEvent("SHOWCASE_GO_PREV"))), 39 != e.keyCode && 40 != e.keyCode || (Ki = !0, window.dispatchEvent(new CustomEvent("SHOWCASE_GO_NEXT")))
             })), requestAnimationFrame(e)
         }(), 
-        qi.set("#app .page", { y: "100%" }), 
-        $(".page", $(".app .pages") ).attr("data-status", "next"), 
-        window.addEventListener("SHOWCASE_LOADING_COMPLETE", c_), 
-        window.addEventListener("SHOWCASE_GO_PREV", f_), 
-        window.addEventListener("SHOWCASE_GO_NEXT", p_), 
+        qi.set("#app .page", { y: "100%" }), // v
+        $(".page", $(".app .pages") ).attr("data-status", "next"), // v
+        window.addEventListener("SHOWCASE_LOADING_COMPLETE", c_), // v
+        window.addEventListener("SHOWCASE_GO_PREV", f_), // v
+        window.addEventListener("SHOWCASE_GO_NEXT", p_), // v
         window.addEventListener("SHOWCASE_GO_PAGE", v_), 
         window.addEventListener("SHOW_MSG_NEXT", __), 
         $(".btn-audio").on("click", (function(e) { $(this).hasClass("is-active") ? (Yv.mute(!1), !1) : (Yv.mute(!0), !0) })), 

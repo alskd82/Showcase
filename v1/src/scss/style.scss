@@ -48,13 +48,12 @@
 
 .pages .page .page-inner { 
     position: absolute; width: 100%; height: 100%; top: 0; left: 0; 
-
-    .page-bg,
-    .page-content {
-        position: absolute; top: 50%; left: 50%;
-        transform: translate(-50%, -50%);
-        width: 80vh; height: 100vh;
-    }
+}
+.pages .page .page-bg,
+.pages .page .page-content {
+    position: absolute; top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80vh; height: 100vh;
 }
 
 .pages .page .bg {
@@ -75,7 +74,10 @@
 }
 
 @media screen and (max-width:1023px) {
-    .pages { height: calc(var(--vh, 1vh) * 100); }
+    .pages { 
+        max-width: calc(var(--vh, 1vh) * 80);
+        height: calc(var(--vh, 1vh) * 100);
+    }
     .pages .page .page-bg,
     .pages .page .page-content {
         width: calc(var(--vh, 1vh) * 80);
@@ -84,6 +86,29 @@
     .pages .page .bg {
         width: calc(var(--vh, 1vh) * 80);
         height: calc(var(--vh, 1vh) * 100);
+    }
+}
+
+@media only screen and (-webkit-min-device-pixel-ratio: 1.5) and (orientation: portrait) {
+    * {
+        -webkit-tap-highlight-color: transparent;
+        -webkit-overflow-scrolling: touch;
+    }
+    // .container { padding-left: 0; }
+    .container .visual-block {
+        width: 100%;
+        z-index: 1;
+        box-sizing: border-box;
+        padding-bottom: 60px;
+        padding-bottom: calc(60px + constant(safe-area-inset-bottom));
+        padding-bottom: calc(60px + env(safe-area-inset-bottom));
+    }
+    .container .visual-block .visual-animation {
+        overflow: hidden;
+        box-sizing: border-box;
+        height: calc(100% - 60px);
+        height: calc(100% - 60px - constant(safe-area-inset-bottom));
+        height: calc(100% - 60px - env(safe-area-inset-bottom));
     }
 }
 
@@ -149,27 +174,27 @@
 // .pages .white .indices .index { border-color: #fff; }
 // .pages .white .indices .index.active { background-color: #fff; }
 // .pages .back.dimmed { background: rgba(0, 0, 0, .7); }
-
-// .app .msg-next {
-//     opacity: 0; z-index: 10;
-//     pointer-events: none;
-//     position: absolute;
-//     height: 4.2519685039vh;
-//     display: flex;
-//     align-items: center;
-//     justify-content: center;
-//     padding: 0 1.8897637795vh;
-//     background: rgba(0, 0, 0, .4);
-//     border-radius: 4px;
-//     position: absolute;
-//     top: 50%;
-//     transform: translateY(-50%);
-//     right: 3.1496062992vh
-// }
-// .app .msg-next.active { animation: msg-next-motion 1.25s forwards; }
-// .app .msg-next span { display: flex; align-items: center; justify-content: center; font-size: 1.4173228346vh; color: #fff; }
-// .app .msg-next span svg { display: block; height: 1.4173228346vh; margin-left: .3149606299vh; }
 */
+.app .msg-next {
+    opacity: 0; z-index: 10;
+    pointer-events: none;
+    position: absolute;
+    height: 4.2519685039vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 1.8897637795vh;
+    background: rgba(0, 0, 0, .4);
+    border-radius: 4px;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 3.1496062992vh
+}
+.app .msg-next.active { animation: msg-next-motion 1.25s forwards; }
+.app .msg-next span { display: flex; align-items: center; justify-content: center; font-size: 1.4173228346vh; color: #fff; }
+.app .msg-next span svg { display: block; height: 1.4173228346vh; margin-left: .3149606299vh; }
+
 @media screen and (max-width:1023px) {
     .pages .page .descriptions p { font-size: calc(var(--vh, 1vh) * 1.8897637795); }
     
@@ -179,12 +204,18 @@
         border-radius: calc(var(--vh, 1vh) * .9448818898);
         margin-right: calc(var(--vh, 1vh) * .6299212598);
     }
-    /*
-    // .app .msg-next { height: calc(var(--vh, 1vh) * 4.2519685039); padding: 0 calc(var(--vh, 1vh) * 1.8897637795); right: calc(var(--vh, 1vh) * 3.1496062992); }
-    // .app .msg-next span { font-size: calc(var(--vh, 1vh) * 1.4173228346); }
-    // .app .msg-next span svg { height: calc(var(--vh, 1vh) * 1.4173228346); margin-left: calc(var(--vh, 1vh) * .3149606299); }
-    */
+    
+    .app .msg-next { height: calc(var(--vh, 1vh) * 4.2519685039); padding: 0 calc(var(--vh, 1vh) * 1.8897637795); right: calc(var(--vh, 1vh) * 3.1496062992); }
+    .app .msg-next span { font-size: calc(var(--vh, 1vh) * 1.4173228346); }
+    .app .msg-next span svg { height: calc(var(--vh, 1vh) * 1.4173228346); margin-left: calc(var(--vh, 1vh) * .3149606299); }
+    
 }
+@keyframes msg-next-motion {
+    0%, 100% { opacity: 0; margin-right: 3%; }
+    20%, 80% { opacity: 1; margin-right: 0; }
+}
+
+
 
 /*
 cover
@@ -391,3 +422,64 @@ event
         filter: blur(.2vh)
     }
 }
+
+/*
+@media only screen and (-webkit-min-device-pixel-ratio: 1.5) and (orientation: portrait) {
+    * {
+        -webkit-tap-highlight-color: transparent;
+        -webkit-overflow-scrolling: touch;
+    }
+    // .container { padding-left: 0; }
+    .container .visual-block {
+        width: 100%;
+        z-index: 1;
+        box-sizing: border-box;
+        padding-bottom: 60px;
+        padding-bottom: calc(60px + constant(safe-area-inset-bottom));
+        padding-bottom: calc(60px + env(safe-area-inset-bottom));
+    }
+    .container .visual-block .visual-animation {
+        overflow: hidden;
+        box-sizing: border-box;
+        height: calc(100% - 60px);
+        height: calc(100% - 60px - constant(safe-area-inset-bottom));
+        height: calc(100% - 60px - env(safe-area-inset-bottom));
+    }
+    .container .visual-block .showcase-info {
+        z-index: 7;
+        transform: translate3d(0, 0, 0);
+    }
+    .container .visual-block .showcase-info ul {
+        position: absolute;
+        left: 0;
+        top: 50%;
+        width: 100%;
+        padding: 0 47px;
+        -webkit-transform: translate3d(0, -50%, 0);
+        transform: translate3d(0, -50%, 0);
+        box-sizing: border-box;
+    }
+    .container .visual-block .showcase-info ul li {
+        padding: 24px 0;
+        text-align: center;
+        border-bottom: 1px solid rgba(241, 241, 241, 0.1);
+    }
+    .container .visual-block .showcase-info ul li:last-child {
+        border-bottom: 0;
+    }
+    .container .visual-block .showcase-info ul li .list-tit {
+        font-size: 16px;
+        font-weight: normal;
+        line-height: 1.5;
+        margin-bottom: 8px;
+    }
+    .container .visual-block .showcase-info ul li span {
+        font-size: 14px;
+        line-height: 1.5;
+    }
+    .container .visual-block .showcase-info .btn-layer-close {
+        right: 10px;
+        top: 10px;
+    }
+}
+*/

@@ -1,5 +1,7 @@
 import { appProgressBar_play } from "./_controller.js"
 
+
+
 function update(tl){
     appProgressBar_play( tl.totalTime() / tl.totalDuration())
 }

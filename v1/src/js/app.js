@@ -4,19 +4,17 @@ import { page } from "./_page.js";
 import {
     goToNext_Fn, goToPrev_Fn,
     pageStatusActive_Fn,
-    inputImageData_Fn
+    inputImageData_Fn,
+    isPageChanging
 } from "./_controller.js"
 
 
-function appProgressBar_play(_xscale) { gsap.set("#app .app-progress-bar", { scaleX: _xscale }) }
-function appProgressBar_reset() { gsap.set("#app .app-progress-bar", { scaleX: 0 }) }
-
 function CSSsetProperty_Fn(){
     const $target = document.querySelector(".visual-block");
-    const t = $target.getBoundingClientRect().height //gsap.getProperty(".visual-block", "height")
+    const t = gsap.getProperty(".visual-block", "height") - gsap.getProperty(".visual-block", "padding-bottom"); //$target.getBoundingClientRect().height 
     const n = .01 * (window.innerWidth, t);
     document.documentElement.style.setProperty("--vh", "".concat(n, "px"));
-    document.documentElement.style.setProperty("--fullwidth", `${window.innerWidth*0.01}px`);
+    document.documentElement.style.setProperty("--fullwidth", `${window.innerWidth}px`);
     document.documentElement.style.setProperty("--fullvh", `${window.innerHeight*0.01}px`);
 }
 function resize_Fn(){
@@ -25,18 +23,10 @@ function resize_Fn(){
     // setTimeout(()=>{ CSSsetProperty_Fn() }, 100)
 };
 
+let wheelEnabled = true; // 휠 기능 
+
 window.addEventListener('load', ()=>{
     document.querySelector("#app").classList.add("loaded");
-
-    // document.querySelector("#btnLayerNext").addEventListener("click", (function(e) {
-    //     // if (Ki || "autoplaying" == $("#app").attr("data-status")) return !1;
-    //     window.dispatchEvent(new CustomEvent("SHOWCASE_GO_NEXT"))
-    // })) 
-    // document.querySelector("#btnLayerPrev").addEventListener("click", (function(e) {
-    //     // if (Ki || "autoplaying" == $("#app").attr("data-status")) return !1;
-    //     // window.dispatchEvent(new CustomEvent("SHOWCASE_GO_PREV"))
-    // }))
-    
 })
 
 window.addEventListener('DOMContentLoaded', ()=>{  
@@ -55,36 +45,27 @@ window.addEventListener('DOMContentLoaded', ()=>{
     // window.addEventListener("SHOWCASE_GO_PAGE", v_)
     // window.addEventListener("SHOW_MSG_NEXT", __)
 
+    /* 좌우 이동 버튼 */
     document.querySelector("#btnLayerNext").addEventListener("click", e => {
+        if(isPageChanging || document.querySelector("#app").getAttribute("data-status") === "autoplaying") return;
         window.dispatchEvent(new CustomEvent("SHOWCASE_GO_NEXT"))
     }) 
     document.querySelector("#btnLayerPrev").addEventListener("click", e => {
+        if(isPageChanging || document.querySelector("#app").getAttribute("data-status") === "autoplaying") return;
         window.dispatchEvent(new CustomEvent("SHOWCASE_GO_PREV"))
     })
 
-    // document.getElementById("btnLayerNext").addEventListener("click", (function(e) {
-    //     console.log()
-    //     // window.dispatchEvent(new CustomEvent("SHOWCASE_GO_NEXT"))
-    // }))
-    // document.getElementById("btnLayerPrev").addEventListener("click", (function(e) {
+    /* 마우스 휠 */
+    document.querySelector("#app").addEventListener("mousewheel", e => {
+        if(isPageChanging || document.querySelector("#app").getAttribute("data-status") === "autoplaying" || !wheelEnabled) return;
+        wheelEnabled = false;
+        setTimeout(()=> wheelEnabled = true , 1000)
+        e.preventDefault();
+        if(e.deltaY > 0)        window.dispatchEvent(new CustomEvent("SHOWCASE_GO_NEXT"))
+        else if (e.deltaY < 0)  window.dispatchEvent(new CustomEvent("SHOWCASE_GO_PREV"))
+    })
 
-    //     // window.dispatchEvent(new CustomEvent("SHOWCASE_GO_PREV"))
-    // }))
 
-    /*  
-        마우스 휠 이벤트 등록
-        Zi.addEventListener("mousewheel", (function(e) {
-                if (Ki || "autoplaying" == $("#app").attr("data-status") || Ji) return !1;
-                e.preventDefault();
-                var t = e.deltaY,
-                    n = e.deltaX;
-                return Math.abs(n) > 4 && n > 0 || Math.abs(t) > 4 && t > 0 ? (Ji = !0, setTimeout((function() {
-                    Ji = !1
-                }), 500), window.dispatchEvent(new CustomEvent("SHOWCASE_GO_NEXT"))) : (Math.abs(n) > 4 && n < 0 || Math.abs(t) > 4 && t < 0) && (Ji = !0, setTimeout((function() {
-                    Ji = !1
-                }), 500), window.dispatchEvent(new CustomEvent("SHOWCASE_GO_PREV"))), !1
-            }))
-    */
     /*
         스와이프 이벤트 등록 
         Zi.addEventListener("swipe", (function(e) {
@@ -143,7 +124,6 @@ window.addEventListener('DOMContentLoaded', ()=>{
 const logoAnimationTime = "#debug" == window.location.hash ? .1 : 5;
 const gestureGuideOpenDelay = "#debug" == window.location.hash ? 0.01 : 0.4;
 const gestureGuideCloseDelay = "#debug" == window.location.hash ? 0.02 : 3;
-
 
 
 function gestureGuide_Fn() { // 첫 실행 - 제스쳐 가이드 
