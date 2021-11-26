@@ -56,15 +56,6 @@ const soundFadeIn =()=> sound.fade(0, 1, 1000, soundId)
 
 
 let wheelEnabled = true; // 휠 기능 
-let AutoplayStopMoment = false;
-function autoplay_pause(){
-    if(AutoplayStopMoment) {
-        page( document.querySelector(".page[data-status='active'").id ).stop()
-    } else{
-        /* 자동플레이를 다시 실행시키기 */
-        page( document.querySelector(".page[data-status='active'").id ).start()
-    }
-}
 
 function gestureGuide_Fn() { // 첫 실행 - 제스쳐 가이드 
     gsap.set("#appLoading .logo", { alpha: 1 }); // 브랜드 로고 보이게 설정 //
@@ -108,6 +99,13 @@ function firstPageShow_Fn() { // cover show //
     window.dispatchEvent(new CustomEvent("SHOWCASE_RESIZE"));
 }
 
+function nextMSG_Fn(e) { // 다음 메시지
+    document.querySelector(".msg-next").classList.remove("active")
+    setTimeout(()=>{
+        document.querySelector(".msg-next").addClass("active")
+    }, 100)
+}
+
 function pageJump_Fn(e){ // .showcase-info #showCaseInfo 페이지 점프 //
     const elem = document.querySelector(`.page${e.detail}`);
     if( elem.id === document.querySelector(".page[data-status='active']").id ) return;
@@ -115,7 +113,8 @@ function pageJump_Fn(e){ // .showcase-info #showCaseInfo 페이지 점프 //
     document.querySelector("#btnLayerNext").classList.remove("blink");
 };
 
-function showcaseInfo(){
+let AutoplayStopMoment = false;
+function showcaseInfo(){ // #showCaseInfo 열고 닫기 //
     if(document.querySelector("#showCaseInfo").classList.contains("is-active")){
         document.querySelector("#showCaseInfo").classList.remove("is-active");
         if(AutoplayStopMoment){
@@ -128,6 +127,14 @@ function showcaseInfo(){
             AutoplayStopMoment = true;
             autoplay_pause()
         }
+    }
+}
+function autoplay_pause(){
+    if(AutoplayStopMoment) {
+        page( document.querySelector(".page[data-status='active'").id ).stop()
+    } else{
+        /* 자동플레이를 다시 실행시키기 */
+        page( document.querySelector(".page[data-status='active'").id ).start()
     }
 }
 
@@ -150,7 +157,7 @@ window.addEventListener('DOMContentLoaded', ()=>{
     window.addEventListener("SHOWCASE_GO_PREV", goToPrev_Fn)
     window.addEventListener("SHOWCASE_GO_NEXT", goToNext_Fn)
     window.addEventListener("SHOWCASE_GO_PAGE", pageJump_Fn)
-    // window.addEventListener("SHOW_MSG_NEXT", __)
+    window.addEventListener("SHOW_MSG_NEXT", nextMSG_Fn)
 
     /* 좌우 이동 버튼 */
     document.querySelector("#btnLayerNext").addEventListener("click", e => {
@@ -233,37 +240,5 @@ window.addEventListener('DOMContentLoaded', ()=>{
         }
     })
     document.querySelector("#btnCategoryShow").addEventListener('click', e => showcaseInfo() )       // 페이지 바로가기 열기
-    document.querySelector("#showCaseInfo > button").addEventListener('click', e => showcaseInfo() ) // 페이지 바로가기 닫기 
-    
+    document.querySelector("#showCaseInfo > button").addEventListener('click', e => showcaseInfo() ) // 페이지 바로가기 닫기   
 })
-
-
-// function rr(e) {
-//     "active" == e.attr("data-status") && (clearTimeout(nr), nr = null, ir.removeClass("blink"), nr = setTimeout((function() {
-//         ir.addClass("blink")
-//     }), 10))
-// }
-
-// function er() {
-//     Ki = true, 
-//     $("#btnLayerNext").removeClass("blink")
-// }
-
-// // Ki = autoplaying
-
-// // ir.on("animationend", (function() { ir.removeClass("blink") })) // ir = $("#btnLayerNext");
-// // qi.set("#app .app-progress-bar", { scaleX: 0 }) 
-// // window.addEventListener("SHOWCASE_GO_NEXT", (function() { 
-// //     "active" == $(".page#intro1").attr("data-status") && cy < 2 && (l_(!0), er(), cy++, py()) })); py() => 인트로1 움직임 함수 
-
-// 현재 페이지가 intro1
-// 스텝이 2보다 작고 => cy 는 +1,  function l_(e) { s_ = e }
-
-// // function l_(e) { s_ = e }
-
-// window.addEventListener("SHOWCASE_GO_NEXT", (function() {
-//     "active" == $("#app #event").attr("data-status") && Ky < 2 && (l_(!0), er(), Ky++, t_()) // 
-// })) 
-// window.addEventListener("SHOWCASE_GO_PREV", (function() {
-//     "active" == $("#app #event").attr("data-status") && Ky > 1 && (l_(!0), er(), Ky--, t_()) // t_ => 이벤트 움직임 함수
-// }))
