@@ -1,21 +1,4 @@
 
-/* 오디오 
-.is-active 추가시 애니메이션
-.btn-audio.is-active
-*/
-@keyframes sound {
-    0% { height: 6px; }
-    50% { height: 32px; }
-    100% { height: 0; }
-}
-@keyframes m-sound { /* 모바일 */
-    0% { height: 4px; }
-    50% { height: 22px; }
-    100% { height: 0px; }
-}
-
-// 
-
 @keyframes plyr-progress {
 	to {
 		background-position: 25px 0;

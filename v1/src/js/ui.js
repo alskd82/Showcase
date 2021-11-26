@@ -1,6 +1,4 @@
-function showEvent (){
-    document.querySelector(".event-block").classList.add("is-active")
-}
+
 /*
 (function($){
     var commonUI = {

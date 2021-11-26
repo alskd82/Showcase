@@ -52,7 +52,7 @@
                     <div class="app" id="app">
                         <div class="pages">
 
-                            <section class="page" data-move-dir="" data-move-type="" id="cover">
+                            <section class="page" data-move-dir="" data-move-type="" data-duration="" id="cover">
                                 <div class="page-inner">
                                     <div class="page-bg">
                                         <div class="bg rolling-bg">
@@ -268,6 +268,7 @@
                                 </svg>
                             </span>
                         </div>
+                        <audio src="./bgm.mp3" preload="auto" loop typeof="audio/mp3?v=2" id="bgm" style="display:none"></audio>
                     </div>
                 </div>
 
@@ -279,19 +280,39 @@
                         <div class="audio-ani-wrap"><span></span> <span></span> <span></span> <span></span></div>
                     </button> 
                     <button type="button" class="btn-layer-control btn-layer-prev swiper-button-prev" id="btnLayerPrev"><i class="ic-30-bold-line-arrow-left ic-white"></i></button>
-                    <button type="button" class="btn-layer-control btn-layer-next swiper-button-next" id="btnLayerNext"><i class="ic-30-bold-line-arrow-right ic-white"></i></button>
+                    <button type="button" class="btn-layer-control btn-layer-next swiper-button-next" id="btnLayerNext">
+                        <i class="ic-30-bold-line-arrow-right ic-white"></i>
+                    </button> 
                     <button type="button" id="btnCategoryShow" data-layer="showCaseInfo"><i class="ic-48-bold-stencil-category ic-white"></i></button>
                     <button type="button" class="btn-reply btn-layer-open" id="btnReplyShow" data-layer="eventLayer"><i class="ic-48-bold-stencil-balloon ic-white"><span class="event-label">EVENT</span></i></button>
                     <button type="button" class="btn-product-view btn-toggle" id="btnProductView" data-layer="productList"><i class="ic-30-line-clothes"></i></button>
                 </div>
                 <!-- /////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
-
+                <!-- showcase menu -->
+                <div class="showcase-info" id="showCaseInfo">
+                    <ul>
+                        <li><a href="#cover"><strong class="list-tit">MUSINSA<br>SHOWCASE #186</strong> <span>NEW HIPPIE GENERATION</span></a></li>
+                        <li><a href="#intro1"><strong class="list-tit">INTRO</strong> <span>REMAKE MONTEREY POP FESTIVAL 1967</span></a></li>
+                        <li><a href="#chapter1Cover"><strong class="list-tit">CHAPTER 1</strong> <span>WHAT’S THE NEW LOOK?</span></a></li>
+                        <li><a href="#chapter2Cover"><strong class="list-tit">CHAPTER 2</strong> <span>ANDERSSON BELL FOR WOMEN</span></a></li>
+                        <li><a href="#event"><strong class="list-tit">EVENT</strong> <span>SHOWCASE EVENT</span></a></li>
+                    </ul>
+                    <button type="button" class="btn-layer-close" data-layer="showCaseInfo"><i class="ic-30-line-close ic-gray7"></i></button>
+                </div>
+                <!-- /////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
             </section>
         </div>
 
     </div>
 
+    <div class="only-portrait">
+        <h1>sorry</h1>
+        <p>무신사 쇼케이스는 세로보기 모드만 지원합니다.<br>화면을 세로로 돌린 후 새로고침해 주세요.</p>
+    </div>
+
+    <script src="./js/swiped-event.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.8.0/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.3/howler.min.js"></script>
     <script type="text/javascript" src="./js/ui.js"></script>
     <script type="module" src="./js/app.js"></script>
 </body>

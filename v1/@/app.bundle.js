@@ -3162,7 +3162,7 @@
     qi.set("#app .app-progress-bar", { scaleX: 0 }), 
 
     appProgressBar_reset();
-    var sr, ur, lr = !1;
+    var sr, ur, lr = false; // lr: 자동재생 , sr: setTimeout
 
     function cr(e) {
         lr && function() {
@@ -11947,9 +11947,9 @@
         window.addEventListener("SHOW_MSG_NEXT", __), 
         $(".btn-audio").on("click", (function(e) { $(this).hasClass("is-active") ? (Yv.mute(!1), !1) : (Yv.mute(!0), !0) })), 
         $(".btn-visual-autoplay").on("click", (function(e) {
-            $(this).hasClass("is-active") ? (lr = !0, $("#app").attr("data-status", "autoplaying"), 
+            $(this).hasClass("is-active") ? (lr = true, $("#app").attr("data-status", "autoplaying"), 
             $("#btnLayerNext, #btnLayerPrev").addClass("disabled"), 
-            window.dispatchEvent(new CustomEvent("SHOWCASE_GO_NEXT"))) : (lr = !1, $("#app").attr("data-status", ""), 
+            window.dispatchEvent(new CustomEvent("SHOWCASE_GO_NEXT"))) : (lr = false, $("#app").attr("data-status", ""), 
             $("#btnLayerNext, #btnLayerPrev").removeClass("disabled"), 
             sr && (clearTimeout(sr), sr = null))
         }))

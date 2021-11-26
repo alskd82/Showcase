@@ -1,15 +1,25 @@
-import { appProgressBar_play } from "./_controller.js"
 
 
+const appProgressBar_play=(_x)=> gsap.set("#app .app-progress-bar", { scaleX: _x });
+const appProgressBar_reset=()=> gsap.set("#app .app-progress-bar", { scaleX: 0 })
+const update=(tl)=> appProgressBar_play( tl.totalTime() / tl.totalDuration())
 
-function update(tl){
-    appProgressBar_play( tl.totalTime() / tl.totalDuration())
-}
+let sr = null;
 function complete(){
-
+    /* 자동재생 이면 4초 후 페이지 자동 전환 */
+    clearTimeout(sr);
+    sr = null;
+    if( document.querySelector("#app").getAttribute("data-status") === "autoplaying" ){
+        const time = document.querySelector('.page[data-status="active"]').dataset.duration > 0 ? document.querySelector('.page[data-status="active"]').dataset.duration : 4e3;
+        sr = setTimeout(()=>{
+            window.dispatchEvent(new CustomEvent("SHOWCASE_GO_NEXT"))
+        }, time)
+    }
+    /* -------------------------------------- */
+    document.querySelector("#btnLayerNext").classList.add("blink");
 }
+
 class PageCover {
-    
     reset(){
         this.loopNum = 1;
         this.loopingTime = 2.2;
@@ -48,6 +58,7 @@ class PageCover {
     }
 
     loop(time){
+        console.log("loop")
         this.t++
         // time *= 0.001
         this.reqID = requestAnimationFrame(this.loop.bind(this));
@@ -393,7 +404,7 @@ class PageEvent {
         switch (this.stepNum){
             case 1:
                 this.tl = gsap.timeline({
-                    onUpdate: ()=>{ upate() },
+                    onUpdate: ()=>{ update(this.tl) },
                     onComplete: ()=>{ complete() }
                 })
                 .to("#event .event1", { left: "50%", alpha: 1, duration: 1, ease: Quart.easeInOut}, 0)
@@ -411,6 +422,7 @@ class PageEvent {
                 break;
         }
         this.indexActive(this.stepNum)
+        gsap.killTweensOf("#event .btn")
         gsap.fromTo("#event .btn", { alpha: 0 }, { alpha: 1, yoyo: true, duration: .5, repeatDelay: .5, repeat: -1 })
     }
     stop(){
@@ -443,10 +455,6 @@ const pageProductDetail = new PageProductDetail();
 
 const pageEvent = new PageEvent();
 
-// const pageChapter1Cover = new PageChapterCover({ id: "chapter1Cover"});
-// const chapter1_1 = new PageProductCover({ id: "chapter1_1"});
-// const chapter1_1_detail = new PageProductDetail({ id: "chapter1_1_detail"});
-
 
 function page(id){
     switch (id) {
@@ -463,24 +471,19 @@ function page(id){
         case "chapter1_1":
         case "chapter1_2":
         case "chapter2_1":
-        // case "chapter1_4":
-        // case "chapter1_5":
             return pageProductCover;
         case "chapter1_1_detail":
         case "chapter1_2_detail":
         case "chapter2_1_detail":
-        // case "chapter1_4_detail":
-        // case "chapter1_5_detail":
             return pageProductDetail;
         
         case "event":
             return pageEvent;
-
     }
 }
 
 
 
 export {
-    page
+    page, appProgressBar_play, appProgressBar_reset
 }

@@ -1,14 +1,11 @@
-import { page } from "./_page.js";
+import { page, appProgressBar_play, appProgressBar_reset } from "./_page.js";
 import { getPreviousSiblings, getNextSiblings, getElementIndex } from "./_utils.js";
 
 const activeElem =()=> document.querySelector('#app .page[data-status="active"]')
-let isPageChanging = false
+let isPageChanging = false;
 
-function appProgressBar_play(e) { gsap.set("#app .app-progress-bar", { scaleX: e }) }
-function appProgressBar_reset() { gsap.set("#app .app-progress-bar", { scaleX: 0 }) }
 
 function goToNext_Fn(){
-    
     if(activeElem().id === "intro1" && page("intro1").stepNum === 1){
         page("intro1").stepNum = 2;
         page("intro1").start() 
@@ -19,24 +16,38 @@ function goToNext_Fn(){
     }
     else {
         if(activeElem().nextElementSibling){
-            isPageChanging = true;  
             goToPage("next")
         }
     }
+    console.log('goToNext_Fn')
+    document.querySelector("#btnLayerNext").classList.remove("blink");
 }
 
 function goToPrev_Fn(){
-    if(activeElem().previousElementSibling){
-        isPageChanging = true;  
-        goToPage("prev")
+    if(activeElem().id === "event" && page("event").stepNum === 2){
+        page("event").stepNum = 1;
+        page("event").start() 
     }
+    else {
+        if(activeElem().previousElementSibling){
+            goToPage("prev")
+        }
+    }
+    document.querySelector("#btnLayerNext").classList.remove("blink");
 }
 
-function goToPage(dir){
+function goToPage(dir, nextPage){
+    isPageChanging = true;
+    console.log('isPageChanging:' + isPageChanging)
     const pageTime = 1;
     const pageEasing = 'Quart.easeInOut';
     const nowElem = document.querySelector('#app .page[data-status="active"]');
-    const nextElem = (dir === "next") ? nowElem.nextElementSibling : nowElem.previousElementSibling;
+    let nextElem
+    if(nextPage){
+        nextElem = nextPage
+    } else {
+        nextElem = (dir === "next") ? nowElem.nextElementSibling : nowElem.previousElementSibling;
+    }
     const pageT_dir = nextElem.getAttribute("data-move-dir");
 
     page(nowElem.id).stop()
@@ -69,11 +80,17 @@ function goToPage(dir){
 
 /*
 ===== 페이지 트랜지션 상하 (기본) - data-move-dir="" ========================================
+data-move-dir="" 
+data-move-tytpe= "" | "linear" | "collapse"  
 */
 function pageT_Vertical(nowElem, nextElem, dir, pageTime, pageEasing){
     const pageMoveType = (dir === "next") ? nextElem.getAttribute("data-move-type") : nowElem.getAttribute("data-move-type");
 
-    const tl = gsap.timeline({ onComplete: ()=>{ page(nextElem.id).start(nextElem.id); isPageChanging = false; }});
+    const tl = gsap.timeline({ onComplete: ()=>{ 
+        page(nextElem.id).start(nextElem.id); 
+        isPageChanging = false; 
+        console.log('isPageChanging:' + isPageChanging)
+    }});
     if(dir === "next"){
         tl.fromTo(nowElem, { x: 0, y: 0 }, { x: 0, y: "-100%" , duration: pageTime, ease: pageEasing}, 0); 
         tl.fromTo(nextElem, { x: 0, y: "100%" }, { x: 0, y: 0 , duration: pageTime , ease: pageEasing}, 0);
@@ -110,11 +127,17 @@ function pageT_Vertical(nowElem, nextElem, dir, pageTime, pageEasing){
 
 /*
 ===== 페이지 트랜지션 좌우 - data-move-dir="horizontal"  ========================================
+data-move-dir="horizontal" | "reverse-horizontal" 
+data-move-tytpe= "" | "linear" | "collapse"  
 */
 function pageT_Horizontal(nowElem, nextElem, dir, pageTime, pageEasing){
     const pageMoveType = (dir === "next") ? nextElem.getAttribute("data-move-type") : nowElem.getAttribute("data-move-type");
 
-    const tl = gsap.timeline({ onComplete: ()=>{ page(nextElem.id).start(nextElem.id); isPageChanging = false; }});
+    const tl = gsap.timeline({ onComplete: ()=>{ 
+        page(nextElem.id).start(nextElem.id); 
+        isPageChanging = false; 
+        console.log('isPageChanging:' + isPageChanging)
+    }});
     if(dir === "next"){
         const nowTarget = (pageMoveType.indexOf("reverse") != -1) ? "100%" : "-100%";
         const nextStart = (pageMoveType.indexOf("reverse") != -1) ? "-100%" : "100%";
@@ -161,7 +184,11 @@ function pageT_Horizontal(nowElem, nextElem, dir, pageTime, pageEasing){
 ====== 페이지 트랜지션 - data-move-dir="curtain"  ===============================================
 */
 function pageT_Curtain(nowElem, nextElem, dir, pageTime, pageEasing){
-    const tl = gsap.timeline({ onComplete: ()=>{ page(nextElem.id).start(nextElem.id); isPageChanging = false; }});
+    const tl = gsap.timeline({ onComplete: ()=>{ 
+        page(nextElem.id).start(nextElem.id); 
+        isPageChanging = false; 
+        console.log('isPageChanging:' + isPageChanging)
+    }});
     if(dir === "next"){
         tl.fromTo(nowElem.querySelector(".page-inner"), { y: 0, x: 0 }, { y: "100%", x: "0%", duration: pageTime, ease: pageEasing}, 0) 
         tl.fromTo(nowElem.querySelector(".curtain > *"), { scaleX: 0 }, { scaleX: 1, duration: pageTime, ease: pageEasing }, .75 * pageTime) 
@@ -184,8 +211,11 @@ function pageT_Curtain(nowElem, nextElem, dir, pageTime, pageEasing){
 ======= 페이지 트랜지션 - data-move-dir="fade" =====================================================
 */
 function pageT_Fade(nowElem, nextElem, dir, pageTime, pageEasing){
-
-    const tl = gsap.timeline({ onComplete: ()=>{ page(nextElem.id).start(nextElem.id); isPageChanging = false; }});
+    const tl = gsap.timeline({ onComplete: ()=>{ 
+        page(nextElem.id).start(nextElem.id); 
+        isPageChanging = false; 
+        console.log('isPageChanging:' + isPageChanging)
+    }});
     if(dir === "next"){
         tl.fromTo(nowElem, { y: 0, x: 0 }, { y: 0, x: 0, duration: .5 * pageTime, ease: Quart.easeOut }, 0) 
         tl.fromTo(nextElem, { y: 0, x: 0, alpha: 0 }, { y: 0, x: 0, alpha: 1, duration: .5 * pageTime, ease: Quart.easeOut }, 0) 
@@ -202,16 +232,31 @@ function pageT_Fade(nowElem, nextElem, dir, pageTime, pageEasing){
 
 /*
 ===== data-status 변경 &  inputImageData_Fn 
+활성화 될 page 의 data-status="active" 로 변경.
+활성화 된 page 의 바로 이전, 다음 페이지 data-status="sibling" 으로 변경.
+sibling 이전, 다음 page들을 data-status="next" | "prev" 로 변경.
+inputImageData_Fn => 활성화 된 page 와 이전, 다음 페이지 이미지 대입.
 */
+let reqId_pageTrans = null;
 function pageStatusActive_Fn( elem ) { 
     inputImageData_Fn( elem )
-    
     elem.setAttribute("data-status", "active")
+    
     if(elem.previousElementSibling) elem.previousElementSibling.setAttribute("data-status", "sibling")
     if(elem.nextElementSibling) elem.nextElementSibling.setAttribute("data-status", "sibling")
-
-    getPreviousSiblings(elem).forEach(( item, i ) => { if(i > 0) item.setAttribute("data-status", "prev") })
-    getNextSiblings(elem).forEach(( item,i ) => { if(i > 0) item.setAttribute("data-status", "next") })
+    /* 페이지가 전환된 후  silbling 이외의 것들 체크 하기 */
+    function pageSibling(){
+        console.log(`isPageChanging: ${isPageChanging}`);
+        if(!isPageChanging){
+            getPreviousSiblings(elem).forEach(( item, i ) => { if(i > 0) item.setAttribute("data-status", "prev") })
+            getNextSiblings(elem).forEach(( item,i ) => { if(i > 0) item.setAttribute("data-status", "next") })
+            cancelAnimationFrame( reqId_pageTrans );
+            return;
+        }
+        reqId_pageTrans = requestAnimationFrame( pageSibling );
+    }
+    pageSibling();
+    /* -------------------------------------------------- */
 }
 
 /*
@@ -252,7 +297,7 @@ function inputImageData_Fn( elem ) {
 export {
     appProgressBar_play, appProgressBar_reset,
     activeElem,
-    goToNext_Fn, goToPrev_Fn,
+    goToNext_Fn, goToPrev_Fn, goToPage,
     pageStatusActive_Fn,
     inputImageData_Fn,
     isPageChanging

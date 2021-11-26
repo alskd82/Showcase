@@ -7,62 +7,136 @@
 
 html, body{
     overflow: hidden;
+    height: 100%;
+    -webkit-text-size-adjust: none;
+    -moz-text-size-adjust: none;
+    -ms-text-size-adjust: none;
+}
+#wrap { position: relative; max-width: 1920px; margin: 0 auto; height: 100%; z-index: 1; }
+.mb-show { display: none; }
+
+@media screen and (max-height: 500px) and (min-width: 1024px) {
+    body, html { overflow-y: auto; }
 }
 
-#wrap {
-    position: relative;
-    max-width: 1920px;
-    margin: 0 auto;
-    height: 100%; z-index: 1;
+/* ==== 1023 이하  :: Mobile ==================== */
+@media screen and (max-width: 1023px) {
+    * {
+        -webkit-tap-highlight-color: transparent;
+        -webkit-overflow-scrolling: touch;
+    }
+    .mb-show { display: block; }
+    .custom-scroll { overflow-y: auto; height: 100%; }
 }
 
+/* ==== 1024 이상 :: PC ==================== */
+@media screen and (min-width: 1024px) {
+    // .custom-scroll {
+        /* overflow-y: auto; */
+        /* height: 100%; */
+        /* padding-right: 10px; */
+        /* margin-right: -10px; */
+    // }
+    .custom-scroll:hover::-webkit-scrollbar-track { background-color: #f1f1f1; }
+    .custom-scroll:hover::-webkit-scrollbar-thumb { background: rgba(0, 0, 0, 0.2); }
+    .custom-scroll::-webkit-scrollbar { width: 5px; }
+    .custom-scroll::-webkit-scrollbar-track { background-color: transparent; transition: background-color 0.3s linear; }
+    .custom-scroll::-webkit-scrollbar-thumb { background-color: transparent; transition: background-color 0.3s linear; }
+    .custom-scroll::-webkit-scrollbar-button { display: none; }
+}
+
+/* ==== 모바일 && 세로방향 ==================== */
+@media only screen and (-webkit-min-device-pixel-ratio: 1.5) and (orientation: portrait) {
+    * {
+        -webkit-tap-highlight-color: transparent;
+        -webkit-overflow-scrolling: touch;
+    }
+    .mb-show { display: block; }
+    // .custom-scroll {
+    //     /* overflow-y: auto; */
+    //     /* height: 100%; */
+    // }
+}
+
+
+
+/* //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// */
+/* ====[ 헤더 ]=================================================================================================================== */
+/* /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// */
+#header { position: absolute; z-index: 2; display: flex; align-items: center; }
+#header .btn-back { display: block; }
+#header h2 a { display: block; } 
+#header h2 a img { display: block; max-width: 100%; }
+/* ==== 1023 이하 :: Mobile ==================== */
+@media screen and (max-width: 1023px) {
+    #wrap.dark #header .btn-back .ic-white { color: #000; }
+    #wrap.dark #header h2 img {
+        -webkit-filter: grayscale(1) invert(1);
+        filter: grayscale(1) invert(1);
+    }
+    #header { left: 10px; top: 10px; z-index: 2; }
+    #header h2 { width: 84px; }
+    #header h2 a img { display: block; }
+    #header .btn-back { margin-top: 0; }
+    #header .btn-back .ic-30-bold-line-arrow-left:before { content: ""; }
+}
+/* ==== 1024 이상 :: PC ==================== */
+@media screen and (min-width: 1024px) {
+    #wrap.dark #header .btn-back .ic-white { color: #000; }
+    #wrap.dark #header h2 img {
+        -webkit-filter: grayscale(1) invert(1);
+        filter: grayscale(1) invert(1);
+    }
+    #header { left: 30px; top: 30px; }
+    #header h2 { width: 95px; }
+    #header .btn-back { margin-top: 0; }
+}
+/* ==== 모바일 && 세로방향 ==================== */
+@media only screen and (-webkit-min-device-pixel-ratio: 1.5) and (orientation: portrait) {
+    #wrap.dark #header .btn-back .ic-white { color: #000; }
+    #wrap.dark #header h2 img {
+        -webkit-filter: grayscale(1) invert(1);
+        filter: grayscale(1) invert(1);
+    }
+}
+/* === 1281 이상 ================================ */
+@media screen and (min-width: 1281px) {
+    #header { left: 40px; top: 46px; }
+    #header h2 { width: 119px; }
+}
+
+/* /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// */
+/* ====[ .container .visual-block  ]================================================================================================== */
+/* /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// */
 
 .container{ 
     position: relative;
+    height: 100%; min-height: 500px;
     padding-left: calc(67vh - 1px);
-    height: 100%;
-    min-height: 500px;
     // box-sizing: border-box;
     // border: 1px solid salmon;
 }
 
-.container .visual-block {
-    position: absolute; 
-    top: 0;
-    left: 0;
-    width: calc(67vh - 1px); 
-    height: 100%;
-}
-
+.container .visual-block { position: absolute;  top: 0; left: 0; width: calc(67vh - 1px); height: 100%; }
 .container .visual-block .visual-animation { 
-    position: absolute; left: 0; top: 0; 
-    width: 100%; height: 100%; 
-    text-align: center; 
-    z-index: 1;
+    position: absolute; left: 0; top: 0;  width: 100%; height: 100%; 
+    text-align: center; z-index: 1;
 }
+.container .visual-block .visual-animation .swiper-slide img { max-width: 600px; position: absolute; left: 40px; bottom: 140px; }
 
-/* Media Query */
-/* //////////////////////////////////////////////////////////////////////////////////////// */
-/* ====[ 높이 500 이하 & 1024 이상 :: PC 상태에서 높이 500 이하 일때 ]==================== */
-/* /////////////////////////////////////////////////////////////////////////////////////// */
 @media screen and (max-height: 500px) and (min-width: 1024px) {
-    body, html { overflow-y: auto; }
     .container{ padding-left: 335px; }
     .container .visual-block{ width: 335px; }
 }
 
-
-/* //////////////////////////////////////////////////////////////////////////////////////// */
-/* ====[ 1023 이하 :: Mobile ]==================== */
-/* /////////////////////////////////////////////////////////////////////////////////////// */
+/* ==== 1023 이하 :: Mobile ==================== */
 @media screen and (max-width: 1023px) {
     .container { padding-left: 0; }
-
     .container .visual-block {
         width: 100%; 
         z-index: 1; padding-bottom: 60px;
-        padding-bottom: calc(60px + constant(safe-area-inset-bottom)); // IOS 11.0 버전
-        padding-bottom: calc(60px + env(safe-area-inset-bottom)); // IOS 11.0 이상
+        padding-bottom: calc(60px + constant(safe-area-inset-bottom));  // IOS 11.0 버전
+        padding-bottom: calc(60px + env(safe-area-inset-bottom));       // IOS 11.0 이상
     }
     .container .visual-block .visual-animation {
         overflow: hidden; box-sizing: border-box;
@@ -72,10 +146,17 @@ html, body{
     }
 }
 
-/* //////////////////////////////////////////////////////////////////////////////////////// */
-/* ====[ 모바일 && 세로방향 ]==================== */
-/* /////////////////////////////////////////////////////////////////////////////////////// */
+/* ==== 1023 이하 :: PC ==================== */
+@media screen and (min-width: 1024px) {
+    .container .visual-block .visual-animation .swiper-slide img { max-width: 237px; position: absolute; left: 33px; bottom: 92px; }
+}
+@media screen and (min-width: 1025px) {
+    .container .visual-block .visual-animation .swiper-slide img { max-width: 296px; position: absolute; bottom: 128px; }
+}
+
+/* ==== 모바일 && 세로방향 ==================== */
 @media only screen and (-webkit-min-device-pixel-ratio: 1.5) and (orientation: portrait) {
+    .container { padding-left: 0; }
     /* .visual-block */
     .container .visual-block {
         width: 100%; z-index: 1; box-sizing: border-box;
@@ -90,3 +171,92 @@ html, body{
         height: calc(100% - 60px - env(safe-area-inset-bottom));
     }
 }
+
+/* === 1281 이상 ================================ */
+@media screen and (min-width: 1281px) {
+    .container .visual-block .visual-animation .swiper-slide img { max-width: 600px; position: absolute; left: 40px; bottom: 140px; }
+}
+
+
+/* /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// */
+/* ====[ .container .visual-block .showcase-info   ]================================================================================================== */
+/* /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// */
+
+.container .visual-block .showcase-info * { pointer-events: none;}
+.container .visual-block .showcase-info a { display: block; pointer-events: auto; }
+.container .visual-block .showcase-info button{ pointer-events: auto; cursor: pointer; }
+
+.container .visual-block .showcase-info {
+    visibility: hidden; opacity: 0; // ==============================================================================================================> 처음엔 안보이게 
+    transition: opacity 0.1s ease-in-out; 
+    position: absolute; left: 0; top: 0; width: 100%; height: 100%;
+    z-index: 4;
+    background-color: rgba(0, 0, 0, 0.8);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    // transform: translateY(100%);
+    // transition: transform .4s cubic-bezier(0.33,0.45,0,1);
+}
+.container .visual-block .showcase-info.is-active { 
+    visibility: visible; opacity: 1; 
+    // transform: translateY(0);
+}
+.container .visual-block .showcase-info ul {
+    overflow-y: auto;
+    position: absolute; left: 0; top: 50%;
+    width: 100%;
+    max-height: 100%;
+    padding: 0 140px;
+    -webkit-transform: translate3d(0, -50%, 0);
+    transform: translate3d(0, -50%, 0);
+    box-sizing: border-box;
+}
+.container .visual-block .showcase-info ul li { padding: 30px 0; text-align: center; border-bottom: 1px solid rgba(241, 241, 241, 0.1); }
+.container .visual-block .showcase-info ul li:last-child { border-bottom: 0; }
+.container .visual-block .showcase-info ul li strong {
+    display: block;
+    margin-bottom: 10px;
+    text-align: center;
+    color: #fff;
+    font-size: 20px;
+    line-height: 30px;
+    font-weight: normal;
+    font-family: "Musinsa", sans-serif;
+}
+.container .visual-block .showcase-info ul li span { font-size: 16px; line-height: 24px; color: #777; }
+.container .visual-block .showcase-info .btn-layer-close { position: absolute; right: 40px; top: 50px; }
+
+@media screen and (max-width: 1023px) {
+    .container .visual-block .showcase-info { z-index: 7; transform: translate3d(0, 0, 0); }
+    .container .visual-block .showcase-info ul {
+        position: absolute; left: 0; top: 50%; width: 100%;
+        padding: 0 47px;
+        -webkit-transform: translate3d(0, -50%, 0);
+        transform: translate3d(0, -50%, 0);
+        box-sizing: border-box;
+    }
+    .container .visual-block .showcase-info ul li { padding: 24px 0; text-align: center; border-bottom: 1px solid rgba(241, 241, 241, 0.1); }
+    .container .visuㄴal-block .showcase-info ul li:last-child { border-bottom: 0; }
+    .container .visual-block .showcase-info ul li .list-tit { font-size: 16px; font-weight: normal; line-height: 1.5; margin-bottom: 8px; }
+    .container .visual-block .showcase-info ul li span { font-size: 14px; line-height: 1.5; }
+    .container .visual-block .showcase-info .btn-layer-close { right: 10px; top: 10px; }
+}
+
+
+@media only screen and (-webkit-min-device-pixel-ratio: 1.5) and (orientation: portrait) {
+    .container .visual-block .showcase-info { z-index: 7; transform: translate3d(0, 0, 0); }
+    .container .visual-block .showcase-info ul {
+        position: absolute; left: 0; top: 50%; width: 100%;
+        padding: 0 47px;
+        -webkit-transform: translate3d(0, -50%, 0);
+        transform: translate3d(0, -50%, 0);
+        box-sizing: border-box;
+    }
+    .container .visual-block .showcase-info ul li { padding: 24px 0; text-align: center; border-bottom: 1px solid rgba(241, 241, 241, 0.1); }
+    .container .visual-block .showcase-info ul li:last-child { border-bottom: 0; }
+    .container .visual-block .showcase-info ul li .list-tit { font-size: 16px; font-weight: normal; line-height: 1.5; margin-bottom: 8px; }
+    .container .visual-block .showcase-info ul li span { font-size: 14px; line-height: 1.5; }
+    .container .visual-block .showcase-info .btn-layer-close { right: 10px; top: 10px; }
+}
+
+
